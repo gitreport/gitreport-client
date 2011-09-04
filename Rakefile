@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "gitaccount"
   gem.homepage = "http://github.com/janroesner/gitaccount"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{gitaccount tracks commit and push info of your git projects}
+  gem.description = %Q{gitaccount keeps track of your projects. It collects info about commited and pushed data, submits it to our servers and provides a gorgous frontend to examine, discover and extract the data that you need to generate the payment recipes for your customers. No longer searching or `what did I commit when and where`...}
   gem.email = "jan@roesner.it"
   gem.authors = ["Jan Roesner"]
   # dependencies defined in Gemfile
