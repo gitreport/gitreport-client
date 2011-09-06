@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require "#{File.dirname(__FILE__).to_s}/../lib/gitaccount"
+
+project = GitAccount::Project.new
+commit = GitAccount::Commit.new(project.log.last)
+puts commit.sha
+puts commit.short_sha
+puts commit.author.name
+puts commit.author.email
+puts commit.time.xmlschema
+puts commit.message
