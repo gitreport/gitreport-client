@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require "#{File.dirname(__FILE__).to_s}/../lib/gitaccount"
+
+project = GitAccount::Project.new
+commit = GitAccount::Commit.new(project.log.last)
+puts "SHA: #{commit.sha}\n"
+puts "ShortSHA: #{commit.short_sha}\n"
+puts "Author Name: #{commit.author.name}\n"
+puts "Author Mail: #{commit.author.email}\n"
+puts "Commit Time: #{commit.time.xmlschema}\n"
+puts "Commit Message: #{commit.message}\n"
+puts "Project Dir: #{project.dir}\n"
+puts "Project Name: #{project.name}\n"
+puts "Project Branch Name: #{project.branch.name}\n"
+puts "Project Remotes: #{project.remotes.map(&:name).join(', ')}\n"
+puts "Project Remote-URL's: #{project.remotes.map(&:url).join(', ')}\n"
+puts "Project Remote Branches: #{project.remote_branches.join(', ')}\n"

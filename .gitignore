@@ -47,3 +47,5 @@ pkg
 # For rubinius:
 #*.rbc
 .rvmrc
+bin/.commit.swp
+lib/.git_account.rb.swp
