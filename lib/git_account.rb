@@ -23,8 +23,13 @@ module GitAccount
       return $1
     end
 
-    # returns an array of names of all remote branches
+    # returns an array of remote objects of the project
     def remotes
+      @project.remotes
+    end
+
+    # returns an array of names of all remote branches
+    def remote_branches
       @project.branches.remote.map(&:full)
     end
 
