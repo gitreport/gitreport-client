@@ -10,3 +10,7 @@ puts commit.author.name
 puts commit.author.email
 puts commit.time.xmlschema
 puts commit.message
+puts project.dir
+puts project.name
+puts project.branch.name
+puts project.remotes
