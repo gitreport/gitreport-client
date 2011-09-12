@@ -11,7 +11,7 @@ module GitAccount
     end
 
     # returns the local project directory
-    def dir
+    def path
       @project.dir.path
     end
 
