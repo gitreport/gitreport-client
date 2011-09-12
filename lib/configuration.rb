@@ -25,11 +25,12 @@ module GitAccount
     # returns the default configuration
     def default_configuration
       {
-        "host" => "gitaccount.com",
-        "port" => 80,
+        "host" => "api.gitaccount.dev",
+        "port" => 3000,
         "proxy_host" => nil,
         "proxy_port" => nil,
-        "auth_token" => "is_unset_check_your_config"
+        "auth_token" => "is_unset_check_your_config",
+        "api_version" => 1
       }
     end
 

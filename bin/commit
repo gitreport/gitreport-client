@@ -4,27 +4,4 @@ $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require "rubygems"
 require "gitaccount"
 
-project = GitAccount::Project.new
-last_commit = GitAccount::Commit.new(project.log.last)
-puts "SHA: #{last_commit.sha}\n"
-puts "ShortSHA: #{last_commit.short_sha}\n"
-puts "Author Name: #{last_commit.author.name}\n"
-puts "Author Mail: #{last_commit.author.email}\n"
-puts "Commit Time: #{last_commit.time.xmlschema}\n"
-puts "Commit Message: #{last_commit.message}\n"
-puts "Project Path: #{project.path}\n"
-puts "Project Name: #{project.name}\n"
-puts "Project Branch Name: #{project.branch.name}\n"
-puts "Project Remotes: #{project.remotes.map(&:name).join(', ')}\n"
-puts "Project Remote-URL's: #{project.remotes.map(&:url).join(', ')}\n"
-puts "Project Remote Branches: #{project.remote_branches.join(', ')}\n"
-
-# GitAccount::Request.new(project).send!
-
-config = GitAccount::Configuration.new(project)
-config.instance_variables.each do |v|
-  puts "Config-#{v}: #{config.instance_variable_get(v)}"
-end
-
-commit_data = GitAccount::CommitData.new(project)
-puts "JSON: #{commit_data.data.to_json}\n"
+GitAccount::Request.new().send!
