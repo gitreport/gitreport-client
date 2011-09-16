@@ -15,24 +15,23 @@ module GitAccount
 
     private
 
-    # sends the data to the server
-    def self.send_data! data, options = nil
+    # sends the commit data to the server
+    def self.send_data! commit, options = nil
       begin
         response = Net::HTTP.Proxy(configuration.proxy_host, configuration.proxy_port).start(configuration.host, configuration.port) do |http|
           request = Net::HTTP::Post.new(request_path options)
           headers request
-          request.body = data.to_json
+          request.body = commit.to_json
           http.open_timeout = configuration.timeout
           http.read_timeout = configuration.timeout
           http.request request
         end
-        raise "Servererror" unless response.code == "200"
+        raise StandardError unless response.code == "200"
       rescue Exception => e
-        puts "Servererror or Connectionerror or Servertimeout occured, saving commit data"
         return false
       end
 
-      return true
+      true
     end
 
     # returns all commits that need to be sent
