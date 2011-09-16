@@ -3,7 +3,7 @@ module GitAccount
   class Request
 
     # sends or saves the commits which are the most recent + stored ones
-    def send! options = nil
+    def self.send! options = nil
       commits = all_commits
       commits.each do |commit|
         send_data!(commit) ? commits = commits.inject([]){ |a,i| ( a << i unless i == commit );a } : break # weird, delete fails here
@@ -16,7 +16,7 @@ module GitAccount
     private
 
     # sends the data to the server
-    def send_data! data, options = nil
+    def self.send_data! data, options = nil
       begin
         response = Net::HTTP.Proxy(configuration.proxy_host, configuration.proxy_port).start(configuration.host, configuration.port) do |http|
           request = Net::HTTP::Post.new(request_path options)
@@ -36,41 +36,41 @@ module GitAccount
     end
 
     # returns all commits that need to be sent
-    def all_commits
-      @all_commits ||= (stored_commits || []).push(recent_commit)
+    def self.all_commits
+      @@all_commits ||= (stored_commits || []).push(recent_commit)
     end
 
     # returns the stored commits that could not be send before
-    def stored_commits
+    def self.stored_commits
       storage.load
     end
 
     # returns the commit that should be send now
-    def recent_commit
-      @commit_data ||= GitAccount::CommitData.new project
+    def self.recent_commit
+      @@commit_data ||= GitAccount::CommitData.new project
     end
 
-    def project
-      @project ||= GitAccount::Project.new
+    def self.project
+      @@project ||= GitAccount::Project.new
     end
 
     # returns local storage
-    def storage
-      @storage ||= GitAccount::Storage.new(ENV['HOME'], '.gitaccount_storage')
+    def self.storage
+      @@storage ||= GitAccount::Storage.new(ENV['HOME'], '.gitaccount_storage')
     end
 
     # returns configuration object
-    def configuration
-      @configuration ||= GitAccount::Configuration.new project
+    def self.configuration
+      @@configuration ||= GitAccount::Configuration.new project
     end
 
     # returns the request path
-    def request_path options
+    def self.request_path options
       "/v#{configuration.api_version}/commits"
     end
 
     # returns the default headers
-    def headers request
+    def self.headers request
       request['User-Agent']              = 'gitaccount-client-ruby'
       request['Content-Type']            = 'application/json'
       request['Accept']                  = 'application/json'
