@@ -1,6 +1,4 @@
-require 'rubygems'
 require 'git'
-
 require 'ostruct'
 require 'project'
 require 'current_branch'
@@ -10,3 +8,4 @@ require 'configuration'
 require 'commit_data'
 require 'request'
 require 'storage'
+require 'hook'

@@ -9,10 +9,10 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jan Roesner"]
-  s.date = %q{2011-09-04}
+  s.date = %q{2011-09-16}
   s.description = %q{gitaccount keeps track of your projects. It collects info about commited and pushed data, submits it to our servers and provides a gorgous frontend to examine, discover and extract the data that you need to generate the payment recipes for your customers. No longer searching or `what did I commit when and where`...}
   s.email = %q{jan@roesner.it}
-  s.executables = ["commit", "init", "push"]
+  s.executables = ["register", "commit", "unregister"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc"
@@ -26,9 +26,18 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "bin/commit",
-    "bin/init",
-    "bin/push",
+    "bin/register",
+    "gitaccount.gemspec",
+    "lib/commit.rb",
+    "lib/commit_data.rb",
+    "lib/configuration.rb",
+    "lib/current_branch.rb",
     "lib/gitaccount.rb",
+    "lib/hook.rb",
+    "lib/log.rb",
+    "lib/project.rb",
+    "lib/request.rb",
+    "lib/storage.rb",
     "test/helper.rb",
     "test/test_gitaccount.rb"
   ]
