@@ -1,3 +1,5 @@
+require "digest/sha1"
+
 module GitAccount
   class Hook
 
@@ -5,6 +7,10 @@ module GitAccount
     def self.set!
       create_hook_file! unless hook_file_exists?
       set_hook!
+    end
+
+    def self.remove!
+      remove_hook! if hook_file_exists?
     end
 
     private
@@ -20,7 +26,10 @@ module GitAccount
         File.open(hook_file, 'w') {|f| f.write(data);f.close }
       rescue Exception => e
         puts "Error while writing hookfile #{hook_file}: #{e}"
+        return false
       end
+
+      true
     end
 
     # returns the hook files content
@@ -39,7 +48,7 @@ module GitAccount
 
     # set's our hook line into an existing hook file if it does not exist already
     def self.set_hook!
-      set_line! unless line_exists?
+      puts "Successfully registered post-commit hook." if (set_line! unless line_exists?)
     end
 
     # returns true if the hook file already has a hook line in
@@ -74,6 +83,37 @@ module GitAccount
     # returns the line to activate gitaccount via post commit hook
     def self.line
       "\nbundle exec commit &\n"
+    end
+
+    # removes the hook
+    def self.remove_hook!
+      (remove_hook_file!; return) if hook_file_unchanged?
+      remove_line! if line_exists?
+    end
+
+    # removes the hook file
+    def self.remove_hook_file!
+      begin
+        File.unlink(hook_file)
+        puts "Successfully removed git account post-commit hook (file).\n"
+      rescue Exception => e
+        puts "Error while removing hookfile #{hook_file}: #{e}"
+      end
+    end
+
+    # returns true if the hook file is ours and was not changed
+    def self.hook_file_unchanged?
+      Digest::SHA1.hexdigest(file_content) == "4e913bd42f32b50dad50e3440de1dc6d05fa4c65"
+    end
+
+    # removes our hook line from hook file
+    def self.remove_line!
+      puts "Successfully removed git account post-commit hook.\n" if write_to_file(clean_up(file_content))
+    end
+
+    # removes our hook line from given content
+    def self.clean_up content
+      content.gsub(/\nbundle\sexec\scommit\s&\n/,'')
     end
 
   end
