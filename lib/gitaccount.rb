@@ -1,4 +1,12 @@
 require 'rubygems'
 require 'git'
 
-require 'git_account'
+require 'ostruct'
+require 'project'
+require 'current_branch'
+require 'log'
+require 'commit'
+require 'configuration'
+require 'commit_data'
+require 'request'
+require 'storage'
