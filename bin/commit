@@ -4,4 +4,4 @@ $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require "rubygems"
 require "gitaccount"
 
-GitAccount::Request.new().send!
+GitAccount::Request.send!

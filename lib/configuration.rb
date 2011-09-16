@@ -30,7 +30,8 @@ module GitAccount
         "proxy_host" => nil,
         "proxy_port" => nil,
         "auth_token" => "is_unset_check_your_config",
-        "api_version" => 1
+        "api_version" => 1,
+        "timeout" => 3
       }
     end
 
