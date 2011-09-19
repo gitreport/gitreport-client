@@ -5,8 +5,7 @@ module GitAccount
 
     # creates a hook file if not exists and adds our hook line if it does not exist already
     def self.set!
-      create_hook_file! unless hook_file_exists?
-      set_hook!
+      set_hook if (create_hook_file! unless hook_file_exists?)
     end
 
     def self.remove!
@@ -23,7 +22,7 @@ module GitAccount
     # writes given data to hook file
     def self.write_to_file data
       begin
-        File.open(hook_file, 'w') {|f| f.write(data);f.close }
+        File.open(hook_file, 'w') {|f| f.write(data);f.chmod(0755);f.close }
       rescue Exception => e
         puts "Error while writing hookfile #{hook_file}: #{e}"
         return false
@@ -72,12 +71,13 @@ module GitAccount
 
     # returns the document header
     def self.doc
+      "#!/bin/sh\n" +
       "# This is a post-commit hook created by gitaccount (http://gitaccount.com)\n" +
-        "#\n" +
-        "# To remove it issue 'bundle exec unregister' in the projects main directory\n" +
-        "# In case the gitaccount gem is not installed anymore, simply remove this hook file\n" +
-        "#\n" +
-        "# Be aware of other post commit hooks that my be mentioned here!\n"
+      "#\n" +
+      "# To remove it issue 'bundle exec unregister' in the projects main directory\n" +
+      "# In case the gitaccount gem is not installed anymore, simply remove this hook file\n" +
+      "#\n" +
+      "# Be aware of other post commit hooks that my be mentioned here!\n"
     end
 
     # returns the line to activate gitaccount via post commit hook
@@ -103,7 +103,7 @@ module GitAccount
 
     # returns true if the hook file is ours and was not changed
     def self.hook_file_unchanged?
-      Digest::SHA1.hexdigest(file_content) == "4e913bd42f32b50dad50e3440de1dc6d05fa4c65"
+      Digest::SHA1.hexdigest(file_content) == "c4285736f3ed53e82755dd23faef3f213e79cc5f"
     end
 
     # removes our hook line from hook file

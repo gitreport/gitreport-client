@@ -7,6 +7,14 @@ module GitAccount
       read_configuration or set_default_configuration
     end
 
+    # sets the given configuration
+    def set_configuration config_data
+      default_configuration.merge!(config_data).each_pair do |key, value|
+        self.class.send(:attr_accessor, key)
+        self.send(:"#{key}=", value)
+      end
+    end
+
     private
 
     # reads project- or user configuration and sets it
@@ -38,14 +46,6 @@ module GitAccount
     # sets the default configuration
     def set_default_configuration
       set_configuration default_configuration
-    end
-
-    # sets the given configuration
-    def set_configuration config_data
-      default_configuration.merge!(config_data).each_pair do |key, value|
-        self.class.send(:attr_accessor, key)
-        self.send(:"#{key}=", value)
-      end
     end
 
     # returns true if a config file exists for the recent project
