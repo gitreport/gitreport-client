@@ -1,4 +1,6 @@
 require 'git'
+require 'net/http'
+require 'active_support/all'
 require 'ostruct'
 require 'project'
 require 'current_branch'
@@ -9,3 +11,4 @@ require 'commit_data'
 require 'request'
 require 'storage'
 require 'hook'
+

@@ -8,6 +8,7 @@ source "http://rubygems.org"
 
 gem 'json'
 gem 'git', '~>1.2.5'
+gem 'activesupport'
 
 group :development do
   gem 'ruby-debug'
