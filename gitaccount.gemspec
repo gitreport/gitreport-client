@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jan Roesner"]
-  s.date = %q{2011-09-16}
+  s.date = %q{2011-09-20}
   s.description = %q{gitaccount keeps track of your projects. It collects info about commited and pushed data, submits it to our servers and provides a gorgous frontend to examine, discover and extract the data that you need to generate the payment recipes for your customers. No longer searching or `what did I commit when and where`...}
   s.email = %q{jan@roesner.it}
   s.executables = ["register", "commit", "unregister"]
@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
     "VERSION",
     "bin/commit",
     "bin/register",
+    "bin/unregister",
     "gitaccount.gemspec",
     "lib/commit.rb",
     "lib/commit_data.rb",
@@ -52,8 +53,8 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<git>, ["~> 1.2.5"])
       s.add_runtime_dependency(%q<json>, ["~> 1.6.1"])
+      s.add_runtime_dependency(%q<git>, ["~> 1.2.5"])
       s.add_development_dependency(%q<ruby-debug>, [">= 0"])
       s.add_development_dependency(%q<rspec>, [">= 0"])
       s.add_development_dependency(%q<shoulda>, [">= 0"])
@@ -61,6 +62,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<jeweler>, ["~> 1.6.4"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
     else
+      s.add_dependency(%q<json>, ["~> 1.6.1"])
       s.add_dependency(%q<git>, ["~> 1.2.5"])
       s.add_dependency(%q<ruby-debug>, [">= 0"])
       s.add_dependency(%q<rspec>, [">= 0"])
@@ -70,6 +72,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rcov>, [">= 0"])
     end
   else
+    s.add_dependency(%q<json>, ["~> 1.6.1"])
     s.add_dependency(%q<git>, ["~> 1.2.5"])
     s.add_dependency(%q<ruby-debug>, [">= 0"])
     s.add_dependency(%q<rspec>, [">= 0"])

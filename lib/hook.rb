@@ -5,7 +5,7 @@ module GitAccount
 
     # creates a hook file if not exists and adds our hook line if it does not exist already
     def self.set!
-      set_hook if (create_hook_file! unless hook_file_exists?)
+      set_hook! if (create_hook_file! unless hook_file_exists?)
     end
 
     def self.remove!
