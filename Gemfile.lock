@@ -36,7 +36,7 @@ DEPENDENCIES
   bundler (~> 1.0.0)
   git (~> 1.2.5)
   jeweler (~> 1.6.4)
-  json (~> 1.6.1)
+  json
   rcov
   rspec
   ruby-debug

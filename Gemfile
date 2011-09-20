@@ -6,7 +6,7 @@ source "http://rubygems.org"
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
 
-gem 'json', '~>1.6.1'
+gem 'json'
 gem 'git', '~>1.2.5'
 
 group :development do
