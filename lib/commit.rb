@@ -1,4 +1,4 @@
-module GitAccount
+module GitReport
   class Commit
 
     attr_accessor :commit

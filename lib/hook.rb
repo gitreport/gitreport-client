@@ -1,6 +1,6 @@
 require "digest/sha1"
 
-module GitAccount
+module GitReport
   class Hook
 
     # creates a hook file if not exists and adds our hook line if it does not exist already
@@ -73,15 +73,15 @@ module GitAccount
     # returns the document header
     def self.doc
       "#!/bin/sh\n" +
-      "# This is a post-commit hook created by gitaccount (http://gitaccount.com)\n" +
+      "# This is a post-commit hook created by gitreport (http://gitreport.com)\n" +
       "#\n" +
       "# To remove it issue 'bundle exec unregister' in the projects main directory\n" +
-      "# In case the gitaccount gem is not installed anymore, simply remove this hook file\n" +
+      "# In case the gitreport gem is not installed anymore, simply remove this hook file\n" +
       "#\n" +
       "# Be aware of other post commit hooks that my be mentioned here!\n"
     end
 
-    # returns the line to activate gitaccount via post commit hook
+    # returns the line to activate gitreport via post commit hook
     def self.line
       "\nbundle exec commit &\n"
     end
@@ -96,7 +96,7 @@ module GitAccount
     def self.remove_hook_file!
       begin
         File.unlink(hook_file)
-        puts "Successfully removed git account post-commit hook (file).\n"
+        puts "Successfully removed gitreport post-commit hook (file).\n"
       rescue Exception => e
         puts "Error while removing hookfile #{hook_file}: #{e}"
       end
@@ -109,7 +109,7 @@ module GitAccount
 
     # removes our hook line from hook file
     def self.remove_line!
-      puts "Successfully removed git account post-commit hook.\n" if write_to_file(clean_up(file_content))
+      puts "Successfully removed gitreport post-commit hook.\n" if write_to_file(clean_up(file_content))
     end
 
     # removes our hook line from given content

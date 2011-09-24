@@ -1,11 +1,11 @@
 # require 'json'
-module GitAccount
+module GitReport
   class CommitData
 
     def initialize project
       @data = {}
       @project = project
-      @commit = GitAccount::Commit.new(project.log.last)
+      @commit = GitReport::Commit.new(project.log.last)
       set_data
     end
 

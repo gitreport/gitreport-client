@@ -1,4 +1,4 @@
-module GitAccount
+module GitReport
 
   class Request
 
@@ -46,21 +46,21 @@ module GitAccount
 
     # returns the commit that should be send now
     def self.recent_commit
-      @@commit_data ||= GitAccount::CommitData.new project
+      @@commit_data ||= GitReport::CommitData.new project
     end
 
     def self.project
-      @@project ||= GitAccount::Project.new
+      @@project ||= GitReport::Project.new
     end
 
     # returns local storage
     def self.storage
-      @@storage ||= GitAccount::Storage.new(ENV['HOME'], '.gitaccount_storage')
+      @@storage ||= GitReport::Storage.new(ENV['HOME'], '.gitreport_storage')
     end
 
     # returns configuration object
     def self.configuration
-      @@configuration ||= GitAccount::Configuration.new project
+      @@configuration ||= GitReport::Configuration.new project
     end
 
     # returns the request path
@@ -70,10 +70,10 @@ module GitAccount
 
     # returns the default headers
     def self.headers request
-      request['User-Agent']              = 'gitaccount-client-ruby'
+      request['User-Agent']              = 'gitreport-client-ruby'
       request['Content-Type']            = 'application/json'
       request['Accept']                  = 'application/json'
-      request['X-gitaccount-Auth-Token'] = configuration.auth_token
+      request['X-gitreport-Auth-Token'] = configuration.auth_token
     end
 
   end

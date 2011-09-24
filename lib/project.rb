@@ -1,4 +1,4 @@
-module GitAccount
+module GitReport
 
   class Project
     attr_accessor :project, :log, :branch
@@ -6,8 +6,8 @@ module GitAccount
     def initialize path = nil
       path ||= '.'
       @project = Git.open(path)
-      @log = GitAccount::Log.new(project)
-      @branch = GitAccount::CurrentBranch.new(project)
+      @log = GitReport::Log.new(project)
+      @branch = GitReport::CurrentBranch.new(project)
     end
 
     # returns the local project directory

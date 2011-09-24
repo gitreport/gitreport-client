@@ -1,5 +1,5 @@
 require 'yaml'
-module GitAccount
+module GitReport
   class Configuration
 
     def initialize project
@@ -33,7 +33,7 @@ module GitAccount
     # returns the default configuration
     def default_configuration
       {
-        "host" => "api.gitaccount.dev",
+        "host" => "api.gitreport.dev",
         "port" => 3000,
         "proxy_host" => nil,
         "proxy_port" => nil,
@@ -55,12 +55,12 @@ module GitAccount
 
     # returns the project configuration file in case there is any
     def project_configuration_file
-      File.join(@project.path, '.gitaccount')
+      File.join(@project.path, '.gitreport')
     end
 
     # returns the users configuration file in case there is any
     def user_configuration_file
-      File.join(ENV['HOME'], '.gitaccount')
+      File.join(ENV['HOME'], '.gitreport')
     end
 
   end

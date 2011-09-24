@@ -4,13 +4,13 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = "gitaccount"
+  s.name = "gitreport"
   s.version = "0.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jan Roesner"]
   s.date = "2011-09-24"
-  s.description = "gitaccount keeps track of your projects. It collects info about commited and pushed data, submits it to our servers and provides a gorgous frontend to examine, discover and extract the data that you need to generate the payment recipes for your customers. No longer searching or `what did I commit when and where`..."
+  s.description = "gitreport keeps track of your projects. It collects info about commited and pushed data, submits it to our servers and provides a gorgous frontend to examine, discover and extract the data that you need to generate the payment recipes for your customers. No longer searching or `what did I commit when and where`..."
   s.email = "jan@roesner.it"
   s.executables = ["commit", "register", "unregister"]
   s.extra_rdoc_files = [
@@ -29,25 +29,22 @@ Gem::Specification.new do |s|
     "bin/register",
     "bin/unregister",
     "foo",
-    "gitaccount.gemspec",
     "lib/commit.rb",
     "lib/commit_data.rb",
     "lib/configuration.rb",
     "lib/current_branch.rb",
-    "lib/gitaccount.rb",
     "lib/hook.rb",
     "lib/log.rb",
     "lib/project.rb",
     "lib/request.rb",
     "lib/storage.rb",
-    "test/helper.rb",
-    "test/test_gitaccount.rb"
+    "test/helper.rb"
   ]
-  s.homepage = "http://github.com/janroesner/gitaccount"
+  s.homepage = "http://github.com/janroesner/gitreport"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.10"
-  s.summary = "gitaccount tracks commit and push info of your git projects"
+  s.summary = "gitreport tracks commit and push info of your git projects"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3

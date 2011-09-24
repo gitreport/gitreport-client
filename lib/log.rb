@@ -1,4 +1,4 @@
-module GitAccount
+module GitReport
   class Log
 
     attr_accessor :project, :commits

@@ -1,4 +1,4 @@
-module GitAccount
+module GitReport
   class CurrentBranch
     attr_accessor :project, :branch
 

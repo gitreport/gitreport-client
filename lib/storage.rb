@@ -1,6 +1,6 @@
 require 'base64'
 
-module GitAccount
+module GitReport
   class Storage
 
     # inits storage object

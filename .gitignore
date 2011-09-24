@@ -39,7 +39,9 @@ pkg
 #.\#*
 
 # For vim:
-#*.swp
+*.swp
+*.swo
+*.swn
 
 # For redcar:
 #.redcar
