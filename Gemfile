@@ -8,10 +8,10 @@ source "http://rubygems.org"
 
 gem 'json'
 gem 'git', '~>1.2.5'
-gem 'activesupport'
+# gem 'activesupport'
 
 group :development do
-  gem 'ruby-debug'
+  gem 'ruby-debug19'
   gem 'rspec'
   gem "shoulda", ">= 0"
   gem "bundler", "~> 1.0.0"

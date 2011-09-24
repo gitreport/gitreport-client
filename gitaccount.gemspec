@@ -4,15 +4,15 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{gitaccount}
+  s.name = "gitaccount"
   s.version = "0.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jan Roesner"]
-  s.date = %q{2011-09-20}
-  s.description = %q{gitaccount keeps track of your projects. It collects info about commited and pushed data, submits it to our servers and provides a gorgous frontend to examine, discover and extract the data that you need to generate the payment recipes for your customers. No longer searching or `what did I commit when and where`...}
-  s.email = %q{jan@roesner.it}
-  s.executables = ["register", "commit", "unregister"]
+  s.date = "2011-09-24"
+  s.description = "gitaccount keeps track of your projects. It collects info about commited and pushed data, submits it to our servers and provides a gorgous frontend to examine, discover and extract the data that you need to generate the payment recipes for your customers. No longer searching or `what did I commit when and where`..."
+  s.email = "jan@roesner.it"
+  s.executables = ["commit", "register", "unregister"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc"
@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
     "bin/commit",
     "bin/register",
     "bin/unregister",
+    "foo",
     "gitaccount.gemspec",
     "lib/commit.rb",
     "lib/commit_data.rb",
@@ -42,20 +43,19 @@ Gem::Specification.new do |s|
     "test/helper.rb",
     "test/test_gitaccount.rb"
   ]
-  s.homepage = %q{http://github.com/janroesner/gitaccount}
+  s.homepage = "http://github.com/janroesner/gitaccount"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.7}
-  s.summary = %q{gitaccount tracks commit and push info of your git projects}
+  s.rubygems_version = "1.8.10"
+  s.summary = "gitaccount tracks commit and push info of your git projects"
 
   if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<json>, [">= 0"])
       s.add_runtime_dependency(%q<git>, ["~> 1.2.5"])
-      s.add_development_dependency(%q<ruby-debug>, [">= 0"])
+      s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
       s.add_development_dependency(%q<rspec>, [">= 0"])
       s.add_development_dependency(%q<shoulda>, [">= 0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
@@ -64,7 +64,7 @@ Gem::Specification.new do |s|
     else
       s.add_dependency(%q<json>, [">= 0"])
       s.add_dependency(%q<git>, ["~> 1.2.5"])
-      s.add_dependency(%q<ruby-debug>, [">= 0"])
+      s.add_dependency(%q<ruby-debug19>, [">= 0"])
       s.add_dependency(%q<rspec>, [">= 0"])
       s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
@@ -74,7 +74,7 @@ Gem::Specification.new do |s|
   else
     s.add_dependency(%q<json>, [">= 0"])
     s.add_dependency(%q<git>, ["~> 1.2.5"])
-    s.add_dependency(%q<ruby-debug>, [">= 0"])
+    s.add_dependency(%q<ruby-debug19>, [">= 0"])
     s.add_dependency(%q<rspec>, [">= 0"])
     s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])

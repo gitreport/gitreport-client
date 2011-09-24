@@ -1,6 +1,7 @@
 require 'git'
 require 'net/http'
-require 'active_support/all'
+require 'time'
+# require 'active_support'
 require 'ostruct'
 require 'project'
 require 'current_branch'
