@@ -2,9 +2,9 @@ module GitReport
 
   class Request
 
-    # sends or saves the commits which are the most recent + stored ones
+    # sends or saves the commits
     def self.send! options = nil
-      commits = all_commits
+      commits = all_commits(options)
       commits.each do |commit|
         send_data!(commit) ? commits = commits.inject([]){ |a,i| ( a << i unless i == commit );a } : break # weird, delete fails here
       end
@@ -14,6 +14,21 @@ module GitReport
     end
 
     private
+
+    # returns the commits in relation to the given option
+    def self.all_commits options
+      raise "No option given to fetch commits" unless options
+      case options
+      when :last_and_stored
+        last_and_stored_commits
+      when :stored
+        stored_commits
+      when :history
+        history_commits
+      else
+        []
+      end
+    end
 
     # sends the commit data to the server
     def self.send_data! commit, options = nil
@@ -34,14 +49,19 @@ module GitReport
       true
     end
 
-    # returns all commits that need to be sent
-    def self.all_commits
+    # returns stored commits plus the last commit taken
+    def self.last_and_stored_commits
       @@all_commits ||= (stored_commits || []).push(recent_commit)
     end
 
     # returns the stored commits that could not be send before
     def self.stored_commits
       storage.load
+    end
+
+    # returns all commits of the actual user that were taken in the past
+    def self.history_commits
+      []
     end
 
     # returns the commit that should be send now

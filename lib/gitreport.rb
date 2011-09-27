@@ -1,7 +1,7 @@
 require 'git'
+require 'json'
 require 'net/http'
 require 'time'
-# require 'active_support'
 require 'ostruct'
 require 'project'
 require 'current_branch'
