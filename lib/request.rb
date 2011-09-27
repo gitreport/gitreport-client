@@ -80,7 +80,7 @@ module GitReport
 
     # returns configuration object
     def self.configuration
-      @@configuration ||= GitReport::Configuration.new project
+      @@configuration ||= GitReport.configuration
     end
 
     # returns the request path

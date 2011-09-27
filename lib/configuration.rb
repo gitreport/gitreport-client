@@ -2,8 +2,8 @@ require 'yaml'
 module GitReport
   class Configuration
 
-    def initialize project
-      @project = project
+    def initialize
+      @project = GitReport.project
       read_configuration or set_default_configuration
     end
 
@@ -33,7 +33,7 @@ module GitReport
     # returns the default configuration
     def default_configuration
       {
-        "host" => "api.gitreport.dev",
+        "host" => "api.gitreport.com",
         "port" => 3000,
         "proxy_host" => nil,
         "proxy_port" => nil,
