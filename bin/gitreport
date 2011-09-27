@@ -1,0 +1,56 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+require "rubygems"
+require 'trollop'
+require "gitreport"
+
+SUB_COMMANDS = %w(activate deactivate commit sync history)
+
+def parse_options
+
+  global_opts = Trollop::options do
+    banner <<-EOS
+gitreport is a commandline tool to synchronize your git repo's with gitreport.com
+
+Usage: gitreport <subcommand> [options]
+
+<subcommand> must be one of activate, deactivate, commit, sync, history
+
+Examples:
+
+gitreport activate
+gitreport deactivate
+gitreport commit
+gitreport sync
+gitreport history
+
+gitreport allows the folling [options]:
+    EOS
+
+    opt :dry_run, "Don't actually do anything", :short => "-n"
+    stop_on SUB_COMMANDS
+  end
+
+  cmd = ARGV.shift
+  Trollop::die "You must specify at least one command" unless cmd
+
+  cmd_opts =
+    case cmd
+    when "activate"
+      GitReport::Hook.set!
+    when "deactivate"
+      GitReport::Hook.remove!
+    when "commit"
+      GitReport::Request.send!
+    when "sync"
+      puts "Syncing"
+    when "history"
+      puts "Syncing history"
+    else
+      Trollop::die "unknown subcommand #{cmd.inspect}"
+    end
+
+end
+
+parse_options

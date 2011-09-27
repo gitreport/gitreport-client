@@ -9,10 +9,10 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jan Roesner"]
-  s.date = "2011-09-24"
+  s.date = "2011-09-27"
   s.description = "gitreport keeps track of your projects. It collects info about commited and pushed data, submits it to our servers and provides a gorgous frontend to examine, discover and extract the data that you need to generate the payment recipes for your customers. No longer searching or `what did I commit when and where`..."
   s.email = "jan@roesner.it"
-  s.executables = ["commit", "register", "unregister"]
+  s.executables = ["gitreport"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc"
@@ -25,20 +25,22 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
-    "bin/commit",
-    "bin/register",
-    "bin/unregister",
-    "foo",
+    "bin/gitreport",
+    "gitreport.gemspec",
     "lib/commit.rb",
     "lib/commit_data.rb",
     "lib/configuration.rb",
     "lib/current_branch.rb",
+    "lib/gitreport.rb",
     "lib/hook.rb",
     "lib/log.rb",
     "lib/project.rb",
     "lib/request.rb",
     "lib/storage.rb",
-    "test/helper.rb"
+    "lib/trollop.rb",
+    "spec/gitreport_spec.rb",
+    "spec/models/storage_spec.rb",
+    "spec/spec_helper.rb"
   ]
   s.homepage = "http://github.com/janroesner/gitreport"
   s.licenses = ["MIT"]
@@ -52,7 +54,7 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<json>, [">= 0"])
       s.add_runtime_dependency(%q<git>, ["~> 1.2.5"])
-      s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
+      s.add_development_dependency(%q<ruby-debug>, [">= 0"])
       s.add_development_dependency(%q<rspec>, [">= 0"])
       s.add_development_dependency(%q<shoulda>, [">= 0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
@@ -61,7 +63,7 @@ Gem::Specification.new do |s|
     else
       s.add_dependency(%q<json>, [">= 0"])
       s.add_dependency(%q<git>, ["~> 1.2.5"])
-      s.add_dependency(%q<ruby-debug19>, [">= 0"])
+      s.add_dependency(%q<ruby-debug>, [">= 0"])
       s.add_dependency(%q<rspec>, [">= 0"])
       s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
@@ -71,7 +73,7 @@ Gem::Specification.new do |s|
   else
     s.add_dependency(%q<json>, [">= 0"])
     s.add_dependency(%q<git>, ["~> 1.2.5"])
-    s.add_dependency(%q<ruby-debug19>, [">= 0"])
+    s.add_dependency(%q<ruby-debug>, [">= 0"])
     s.add_dependency(%q<rspec>, [">= 0"])
     s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
