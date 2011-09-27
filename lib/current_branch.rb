@@ -13,11 +13,6 @@ module GitReport
       @project.branches.select{|b| b.current}.first.full rescue alt_name
     end
 
-    # return the remote of this branch if it's tracking any, else nil
-    def tracking
-      g.config.to_a.select{|ary| ary.first.match(/^branch/)} #TODo
-    end
-
     private
 
     # alternative method to return the current branches name

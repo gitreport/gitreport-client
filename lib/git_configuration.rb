@@ -8,7 +8,7 @@ module GitReport
 
     # returns the current users email from git config
     def self.user_email
-      GitReport.project.project.config('user_email')
+      GitReport.project.project.config('user.email')
     end
   end
 end

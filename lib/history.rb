@@ -6,10 +6,8 @@ module GitReport
       case scope
       when :user
         self.user_commits
-      when :all
-        self.all_commits
       else
-        self.user_commits
+        self.all_commits
       end
     end
 
