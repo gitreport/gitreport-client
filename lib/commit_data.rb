@@ -1,10 +1,10 @@
 module GitReport
   class CommitData
 
-    def initialize project
+    def initialize(commit = nil)
       @data = {}
-      @project = project
-      @commit = GitReport::Commit.new(project.log.last)
+      @project = GitReport.project
+      @commit = commit || GitReport::Commit.new(@project.log.last)
       set_data
     end
 

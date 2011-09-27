@@ -24,7 +24,7 @@ module GitReport
       when :stored
         stored_commits
       when :history
-        history_commits
+        history_commits :user
       else
         []
       end
@@ -60,17 +60,17 @@ module GitReport
     end
 
     # returns all commits of the actual user that were taken in the past
-    def self.history_commits
-      []
+    def self.history_commits scope
+      @@history_commits ||= GitReport::History.commits(scope)
     end
 
     # returns the commit that should be send now
     def self.recent_commit
-      @@commit_data ||= GitReport::CommitData.new project
+      @@commit_data ||= GitReport::CommitData.new
     end
 
     def self.project
-      @@project ||= GitReport::Project.new
+      @@project ||= GitReport.project
     end
 
     # returns local storage
