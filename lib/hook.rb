@@ -53,7 +53,7 @@ module GitReport
 
     # returns true if the hook file already has a hook line in
     def self.line_exists?
-      if file_content.match(/bundle\sexec\scommit\s&/)
+      if file_content.match(/bundle\sexec\sgitreport\scommit\s&/)
         return true
       end
 
@@ -83,7 +83,7 @@ module GitReport
 
     # returns the line to activate gitreport via post commit hook
     def self.line
-      "\nbundle exec commit &\n"
+      "\nbundle exec gitreport commit &\n"
     end
 
     # removes the hook
@@ -104,7 +104,7 @@ module GitReport
 
     # returns true if the hook file is ours and was not changed
     def self.hook_file_unchanged?
-      Digest::SHA1.hexdigest(file_content) == "c4285736f3ed53e82755dd23faef3f213e79cc5f"
+      Digest::SHA1.hexdigest(file_content) == "9c69e61ce35b8ce21968343411e6abeb89b237dd"
     end
 
     # removes our hook line from hook file
@@ -114,7 +114,7 @@ module GitReport
 
     # removes our hook line from given content
     def self.clean_up content
-      content.gsub(/\nbundle\sexec\scommit\s&\n/,'')
+      content.gsub(/\nbundle\sexec\sgitreport\scommit\s&\n/,'')
     end
 
   end
