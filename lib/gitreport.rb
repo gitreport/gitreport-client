@@ -22,4 +22,8 @@ module GitReport
     @@project ||= GitReport::Project.new
   end
 
+  def self.configuration
+    @@config ||= GitReport::Configuration.new
+  end
+
 end
