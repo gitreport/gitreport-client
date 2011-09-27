@@ -31,6 +31,11 @@ module GitReport
       @project.branches.remote.map(&:full)
     end
 
+    # returns the projects rev-list
+    def revlist
+      (`git rev-list --all`).split("\n")
+    end
+
   end
 
 end

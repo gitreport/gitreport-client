@@ -70,7 +70,7 @@ module GitReport
     end
 
     def self.project
-      @@project ||= GitReport::Project.new
+      @@project ||= GitReport.project
     end
 
     # returns local storage
