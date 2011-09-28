@@ -4,6 +4,7 @@ require 'gitreport'
 describe 'GitReport::Hook' do
 
   before :each do
+    GitReport::Hook.stub!(:puts)
     @repo    = FakeRepository.new
     GitReport.stub!(:project).and_return(GitReport::Project.new(@repo.path))
     @project = GitReport::Project.new(@repo.path)
