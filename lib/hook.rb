@@ -35,7 +35,8 @@ module GitReport
     # returns the hook files content
     def self.file_content
       begin
-        @@content ||= File.open(hook_file, 'r').read
+        File.open(hook_file, 'r').read
+        # @@content ||= File.open(hook_file, 'r').read
       rescue Exception => e
         puts "Error while reading hookfile #{hook_file}: #{e}"
       end
@@ -67,7 +68,7 @@ module GitReport
 
     # returns the hook files path
     def self.hook_file
-      @@file ||= File.join('.', '.git', 'hooks', 'post-commit')
+      @@file ||= GitReport.project.path + "/.git/hooks/post-commit"
     end
 
     # returns the document header
