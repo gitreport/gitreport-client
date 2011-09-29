@@ -28,26 +28,38 @@ describe 'GitReport::Configuration' do
     end
 
     it 'should set the config from the user file in case no project config file exists' do
-      pending
       @repo.create_user_config_file
 
-      # TODO: hard to realize, maybe with a fixed fakefs
-      GitReport.configuration.host.should       == "user.host.anywhere"
-      GitReport.configuration.port.should       == 43
-      GitReport.configuration.auth_token.should == "xyz98765"
-      GitReport.configuration.proxy_host.should == "user.proxy.host"
-      GitReport.configuration.proxy_port.should == 24
+      class TestConfiguration < GitReport::Configuration
+        def user_configuration_file
+          File.join(@project.path, '.gitreport_user')
+        end
+      end
+
+      config = TestConfiguration.new
+
+      config.host.should       == "user.host.anywhere"
+      config.port.should       == 43
+      config.auth_token.should == "xyz987565"
+      config.proxy_host.should == "user.proxy.host"
+      config.proxy_port.should == 24
     end
 
     it 'should set the config to default in case no user- and no project config file exists' do
-      pending
 
-      # TODO fake fs to not serve users .gitreport in case there is any
-      GitReport.configuration.host.should       == "api.gitreport.com"
-      GitReport.configuration.port.should       == 80
-      GitReport.configuration.auth_token.should == "is_unset_check_your_config"
-      GitReport.configuration.proxy_host.should be_nil
-      GitReport.configuration.proxy_port.should be_nil
+      class TestConfiguration < GitReport::Configuration
+        def user_configuration_file
+          nil
+        end
+      end
+
+      config = TestConfiguration.new
+
+      config.host.should       == "api.gitreport.com"
+      config.port.should       == 80
+      config.auth_token.should == "is_unset_check_your_config"
+      config.proxy_host.should be_nil
+      config.proxy_port.should be_nil
     end
 
   end
