@@ -1,27 +1,52 @@
 # require 'spec_helper'
 require 'gitreport'
-# require 'fakefs/spec_helpers'
 
 describe 'GitReport::Storage' do
-  # include FakeFS::SpecHelpers
 
   before :each do
-    @repo    = FakeRepository.new
-    GitReport.stub!(:project).and_return(GitReport::Project.new(@repo.path))
-    @project = GitReport::Project.new(@repo.path)
-    @commit  = GitReport::Commit.new(@project.log.first)
-    @storage = GitReport::Storage.new('path','filename')
+    @tempfile = Tempfile.new('storage')
+    @tempdir = File.dirname(@tempfile.path)
+    @storage = GitReport::Storage.new(@tempdir, @tempfile)
+    class Foo
+      attr_accessor :foo, :bar
+
+      def initialize foo, bar
+        @foo = foo
+        @bar = bar
+      end
+    end
   end
 
   describe '#save!' do
-    it 'should save the given data to a file' do
-      pending
-      @storage.save!("data")
+    it 'should save the given object to a file' do
+      f1 = Foo.new("foo1", "bar1")
+      f2 = Foo.new("foo2", "bar2")
+
+      @storage.save! [f1,f2]
+
+      restore = Marshal.load(Base64.decode64(File.read "#{@tempdir}/#{@tempfile}"))
+
+      restore.first.foo.should == f1.foo
+      restore.first.bar.should == f1.bar
+      restore.last.foo.should  == f2.foo
+      restore.last.bar.should  == f2.bar
     end
   end
 
   describe '#load' do
-    it 'should load previously stored data'
+    it 'should load previously stored objects' do
+      f1 = Foo.new("foo1", "bar1")
+      f2 = Foo.new("foo2", "bar2")
+
+      @storage.save! [f1,f2]
+
+      restore = @storage.load
+
+      restore.first.foo.should == f1.foo
+      restore.first.bar.should == f1.bar
+      restore.last.foo.should  == f2.foo
+      restore.last.bar.should  == f2.bar
+    end
   end
 
 end
