@@ -1,7 +1,9 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    addressable (2.2.6)
     columnize (0.3.4)
+    crack (0.3.1)
     diff-lcs (1.1.3)
     git (1.2.5)
     jeweler (1.6.4)
@@ -28,6 +30,9 @@ GEM
     ruby-debug-base (0.10.4)
       linecache (>= 0.3)
     shoulda (2.11.3)
+    webmock (1.7.6)
+      addressable (~> 2.2, > 2.2.5)
+      crack (>= 0.1.7)
 
 PLATFORMS
   ruby
@@ -41,3 +46,4 @@ DEPENDENCIES
   rspec
   ruby-debug
   shoulda
+  webmock

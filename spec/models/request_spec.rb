@@ -61,6 +61,15 @@ describe 'GitReport::Request' do
 
       GitReport::Request.send! :history
     end
+
+    it 'should send a single commit to the server'
+    it 'should send two commits to the server if two commits are in the pipe'
+    it 'should store one commit in case of a connection error'
+    it 'should store one commit in case of a server timeout'
+    it 'should store one commit in case of a response other than 200'
+    it 'should store two commits in case of a connection error'
+    it 'should store two commits in case of a server timeout'
+    it 'should store two commits in case of a response other than 200'
   end
 
 end
