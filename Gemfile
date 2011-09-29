@@ -13,6 +13,7 @@ group :development do
   gem 'ruby-debug'
   # gem 'ruby-debug19'
   gem 'rspec'
+  gem 'fakefs'
   gem "shoulda", ">= 0"
   gem "bundler", "~> 1.0.0"
   gem "jeweler", "~> 1.6.4"

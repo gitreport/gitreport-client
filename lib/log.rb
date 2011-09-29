@@ -8,7 +8,7 @@ module GitReport
       @project = project
     end
 
-    # returns all the commits of that project
+    # returns all the commits of that project of the currently checked out branch
     def commits
       @commits ||= @project.log.entries.sort{ |a, b| a.author.date <=> b.author.date }
     end

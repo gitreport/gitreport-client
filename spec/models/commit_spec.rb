@@ -2,7 +2,7 @@ require 'gitreport'
 
 describe 'GitReport::Commit' do
 
-  before :all do
+  before :each do
     @repo    = FakeRepository.new
     @project = GitReport::Project.new(@repo.path)
     @commit  = GitReport::Commit.new(@project.log.first)

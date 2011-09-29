@@ -6,8 +6,8 @@ module GitReport
     def initialize path = nil
       path ||= '.'
       @project = Git.open(path)
-      @log = GitReport::Log.new(project)
-      @branch = GitReport::CurrentBranch.new(project)
+      @log = GitReport::Log.new(@project)
+      @branch = GitReport::CurrentBranch.new(@project)
     end
 
     # returns the local project directory
