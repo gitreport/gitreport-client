@@ -55,16 +55,29 @@ class FakeRepository
     return @project_dir
   end
 
-  def create_config_file
+  def create_project_config_file
     File.open("#{@project_dir}/.gitreport", 'w+') do |file|
       file.write "---\n"
       file.write "auth_token: 12345ab\n"
       file.write "host: some.host.anywhere\n"
       file.write "port: 42\n"
       file.write "proxy_host: some.proxy.host\n"
-      file.write "proxy_port: 23"
-      file.write "api_version: 2"
-      file.write "timeout: 66"
+      file.write "proxy_port: 23\n"
+      file.write "api_version: 2\n"
+      file.write "timeout: 66\n"
+    end
+  end
+
+  def create_user_config_file
+    File.open("#{@project_dir}/.gitreport_user", 'w+') do |file|
+      file.write "---\n"
+      file.write "auth_token: xyz987565\n"
+      file.write "host: user.host.anywhere\n"
+      file.write "port: 43\n"
+      file.write "proxy_host: user.proxy.host\n"
+      file.write "proxy_port: 24\n"
+      file.write "api_version: 3\n"
+      file.write "timeout: 77\n"
     end
   end
 end

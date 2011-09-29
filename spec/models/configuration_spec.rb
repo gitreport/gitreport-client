@@ -5,7 +5,6 @@ describe 'GitReport::Configuration' do
 
   before :each do
     @repo    = FakeRepository.new
-    @repo.create_config_file
     GitReport.stub!(:project).and_return(GitReport::Project.new(@repo.path))
     @project = GitReport.project
     @commit  = GitReport::Commit.new(@project.log.last)
@@ -19,19 +18,37 @@ describe 'GitReport::Configuration' do
     end
 
     it 'should set the config from a project config file in case one exists' do
-      pending
-      # TODO: this is too late here, project is already initialized
-      @repo.create_config_file
+      @repo.create_project_config_file
 
-      config = GitReport::Configuration.new
-      config.host.should == "some.host.anywhere"
+      GitReport.configuration.host.should       == "some.host.anywhere"
+      GitReport.configuration.port.should       == 42
+      GitReport.configuration.auth_token.should == "12345ab"
+      GitReport.configuration.proxy_host.should == "some.proxy.host"
+      GitReport.configuration.proxy_port.should == 23
     end
 
-    it 'should set the config from the project file even if a user specific file exists'
+    it 'should set the config from the user file in case no project config file exists' do
+      pending
+      @repo.create_user_config_file
 
-    it 'should set the config from the user file in case no project config file exists'
+      # TODO: hard to realize, maybe with a fixed fakefs
+      GitReport.configuration.host.should       == "user.host.anywhere"
+      GitReport.configuration.port.should       == 43
+      GitReport.configuration.auth_token.should == "xyz98765"
+      GitReport.configuration.proxy_host.should == "user.proxy.host"
+      GitReport.configuration.proxy_port.should == 24
+    end
 
-    it 'should set the config to default in case no user- and no project config file exists'
+    it 'should set the config to default in case no user- and no project config file exists' do
+      pending
+
+      # TODO fake fs to not serve users .gitreport in case there is any
+      GitReport.configuration.host.should       == "api.gitreport.com"
+      GitReport.configuration.port.should       == 80
+      GitReport.configuration.auth_token.should == "is_unset_check_your_config"
+      GitReport.configuration.proxy_host.should be_nil
+      GitReport.configuration.proxy_port.should be_nil
+    end
 
   end
 
