@@ -4,13 +4,16 @@ module GitReport
 
     # send the given commits chunked
     def self.send! option = nil
-      i = 1
-      batches(option).each do |batch|
+      puts "Collecting your projects commit data - this can take some time, please be patient!"
+      batches(option).each_with_index do |batch, index|
         data = batch.map(&:data).to_json
-        puts "sending batch #{i}\n"
-        # puts "data: --#{data}--\\n\\n\\n"
-        i += 1
+        print "Sending batch #{index + 1} of #{@@num_batches} - #{index*100/@@num_batches}%\r"
+        STDOUT.flush
+        send_data!(data)
       end
+      print "Sending batch #{@@num_batches} of #{@@num_batches} - 100%\r"
+      STDOUT.flush
+      print "\n"
     end
 
     private
@@ -27,7 +30,12 @@ module GitReport
         batches << commits[(n-1)*batchsize..n*batchsize-1]
       end
 
+      @@num_batches = batches.size
       batches
+    end
+
+    def self.send_data! data
+      sleep 1
     end
 
   end

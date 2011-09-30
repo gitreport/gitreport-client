@@ -40,7 +40,7 @@ module GitReport
         "auth_token"  => "is_unset_check_your_config",
         "api_version" => 1,
         "timeout"     => 3,
-        "batchsize"   => 6
+        "batchsize"   => 10
       }
     end
 
