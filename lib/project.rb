@@ -36,6 +36,10 @@ module GitReport
       (`git rev-list --all`).split("\n")
     end
 
+    # returns the projects first commits hash as an identifier
+    def identifier
+      @@identifier ||= self.log.commits.last.sha
+    end
   end
 
 end

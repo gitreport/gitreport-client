@@ -63,5 +63,11 @@ describe 'GitReport::Project' do
     end
   end
 
+  describe '#identifier' do
+    it 'should return the projects first commits sha' do
+      GitReport.project.identifier == @project.log.commits.last.sha
+    end
+  end
+
 end
 

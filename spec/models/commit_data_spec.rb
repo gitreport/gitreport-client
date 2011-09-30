@@ -29,11 +29,12 @@ describe 'GitReport::CommitData' do
       cm = GitReport::CommitData.new GitReport::Commit.new(@project.log.first)
 
       cm.data.is_a?(Hash).should be_true
-      cm.data.size.should              == 12
-      cm.data[:sha].should             == @project.log.first.sha
-      cm.data[:author_name].should     == @project.log.first.author.name
-      cm.data[:author_email].should    == @project.log.first.author.email
-      cm.data[:remote_branches].should == @project.remote_branches
+      cm.data.size.should                 == 13
+      cm.data[:sha].should                == @project.log.first.sha
+      cm.data[:author_name].should        == @project.log.first.author.name
+      cm.data[:author_email].should       == @project.log.first.author.email
+      cm.data[:remote_branches].should    == @project.remote_branches
+      cm.data[:project_identifier].should == @project.identifier
     end
   end
 
