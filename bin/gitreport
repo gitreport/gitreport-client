@@ -19,11 +19,11 @@ Usage: gitreport <subcommand> [options]
 
 Examples:
 
-gitreport activate
-gitreport deactivate
-gitreport commit
-gitreport sync
-gitreport history
+gitreport activate   - register your project with gitreport.com
+gitreport deactivate - unregister your project from gitreport.com
+gitreport commit     - manually transfer your last and stored (offline) commits to gitreport.com
+gitreport sync       - manually transfer stored (offline) commits to gitreport.com
+gitreport history    - import all the commits of a project to gitreport.com
 
 gitreport allows the folling [options]:
     EOS
