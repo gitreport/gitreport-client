@@ -11,9 +11,10 @@ require 'history'
 require 'configuration'
 require 'git_configuration'
 require 'commit_data'
-require 'request'
+require 'sender'
 require 'storage'
 require 'hook'
+require 'supplier'
 
 module GitReport
 

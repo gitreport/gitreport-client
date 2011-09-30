@@ -1,7 +1,7 @@
 # require 'spec_helper'
 require 'gitreport'
 
-describe 'GitReport::Request' do
+describe 'GitReport::Sender' do
 
   before :each do
     @repo    = FakeRepository.new
@@ -23,10 +23,10 @@ describe 'GitReport::Request' do
         end
       end
 
-      GitReport::Request.stub!(:storage).and_return DummyStorage
-      GitReport::Request.should_receive(:send_data!).twice.and_return(true)
+      GitReport::Supplier.stub!(:storage).and_return DummyStorage
+      GitReport::Sender.should_receive(:send_data!).twice.and_return(true)
 
-      GitReport::Request.send! :last_and_stored
+      GitReport::Sender.send! :last_and_stored
     end
 
     it 'should send stored commits when called with :stored' do
@@ -40,10 +40,10 @@ describe 'GitReport::Request' do
         end
       end
 
-      GitReport::Request.stub!(:storage).and_return DummyStorage
-      GitReport::Request.should_receive(:send_data!).exactly(3).times.and_return(true)
+      GitReport::Supplier.stub!(:storage).and_return DummyStorage
+      GitReport::Sender.should_receive(:send_data!).exactly(3).times.and_return(true)
 
-      GitReport::Request.send! :stored
+      GitReport::Sender.send! :stored
     end
 
     it 'should send all commits from projects revlist when called with :history' do
@@ -57,9 +57,9 @@ describe 'GitReport::Request' do
       @project.project.commit('commit with file4 on new_branch')
 
       @project.project.branch('master').checkout
-      GitReport::Request.should_receive(:send_data!).exactly(3).times.and_return(true)
+      GitReport::Sender.should_receive(:send_data!).exactly(3).times.and_return(true)
 
-      GitReport::Request.send! :history
+      GitReport::Sender.send! :history
     end
 
     it 'should send a single commit to the server'
