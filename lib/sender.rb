@@ -1,6 +1,6 @@
 module GitReport
 
-  class Request
+  class Sender
 
     # sends or saves the commits
     def self.send! options = nil

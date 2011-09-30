@@ -42,11 +42,11 @@ gitreport allows the folling [options]:
     when "deactivate"
       GitReport::Hook.remove!
     when "commit"
-      GitReport::Request.send! :last_and_stored
+      GitReport::Sender.send! :last_and_stored
     when "sync"
-      GitReport::Request.send! :stored
+      GitReport::Sender.send! :stored
     when "history"
-      GitReport::Request.send! :history
+      GitReport::Sender.send! :history
     else
       Trollop::die "unknown subcommand #{cmd.inspect}"
     end
