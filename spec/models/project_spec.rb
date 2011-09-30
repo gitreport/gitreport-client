@@ -65,7 +65,7 @@ describe 'GitReport::Project' do
 
   describe '#identifier' do
     it 'should return the projects first commits sha' do
-      GitReport.project.identifier == @project.log.commits.last.sha
+      GitReport.project.identifier == @project.log.commits.first.sha
     end
   end
 

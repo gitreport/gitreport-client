@@ -33,13 +33,14 @@ module GitReport
     # returns the default configuration
     def default_configuration
       {
-        "host" => "api.gitreport.com",
-        "port" => 80,
-        "proxy_host" => nil,
-        "proxy_port" => nil,
-        "auth_token" => "is_unset_check_your_config",
+        "host"        => "api.gitreport.com",
+        "port"        => 80,
+        "proxy_host"  => nil,
+        "proxy_port"  => nil,
+        "auth_token"  => "is_unset_check_your_config",
         "api_version" => 1,
-        "timeout" => 3
+        "timeout"     => 3,
+        "batchsize"   => 6
       }
     end
 
