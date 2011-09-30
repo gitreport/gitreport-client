@@ -14,6 +14,7 @@ require 'commit_data'
 require 'request'
 require 'storage'
 require 'hook'
+require 'supplier'
 
 module GitReport
 

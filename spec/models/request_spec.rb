@@ -23,7 +23,7 @@ describe 'GitReport::Request' do
         end
       end
 
-      GitReport::Request.stub!(:storage).and_return DummyStorage
+      GitReport::Supplier.stub!(:storage).and_return DummyStorage
       GitReport::Request.should_receive(:send_data!).twice.and_return(true)
 
       GitReport::Request.send! :last_and_stored
@@ -40,7 +40,7 @@ describe 'GitReport::Request' do
         end
       end
 
-      GitReport::Request.stub!(:storage).and_return DummyStorage
+      GitReport::Supplier.stub!(:storage).and_return DummyStorage
       GitReport::Request.should_receive(:send_data!).exactly(3).times.and_return(true)
 
       GitReport::Request.send! :stored

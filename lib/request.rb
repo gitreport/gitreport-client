@@ -4,7 +4,7 @@ module GitReport
 
     # sends or saves the commits
     def self.send! options = nil
-      commits = all_commits(options)
+      commits = GitReport::Supplier.commits(options)
       commits.each do |commit|
         send_data!(commit) ? commits = commits.inject([]){ |a,i| ( a << i unless i == commit );a } : break # weird, delete fails here
       end
@@ -14,21 +14,6 @@ module GitReport
     end
 
     private
-
-    # returns the commits in relation to the given option
-    def self.all_commits options
-      raise "No option given to fetch commits" unless options
-      case options
-      when :last_and_stored
-        last_and_stored_commits
-      when :stored
-        stored_commits
-      when :history
-        history_commits :user
-      else
-        []
-      end
-    end
 
     # sends the commit data to the server
     def self.send_data! commit, options = nil
@@ -47,30 +32,6 @@ module GitReport
       end
 
       true
-    end
-
-    # returns stored commits plus the last commit taken
-    def self.last_and_stored_commits
-      @@all_commits ||= (stored_commits || []).push(recent_commit)
-    end
-
-    # returns the stored commits that could not be send before
-    def self.stored_commits
-      storage.load
-    end
-
-    # returns all commits of the actual user that were taken in the past
-    def self.history_commits scope
-      @@history_commits ||= GitReport::History.commits(scope)
-    end
-
-    # returns the commit that should be send now
-    def self.recent_commit
-      @@commit_data ||= GitReport::CommitData.new
-    end
-
-    def self.project
-      @@project ||= GitReport.project
     end
 
     # returns local storage
@@ -93,7 +54,7 @@ module GitReport
       request['User-Agent']              = 'gitreport-client-ruby'
       request['Content-Type']            = 'application/json'
       request['Accept']                  = 'application/json'
-      request['X-gitreport-Auth-Token'] = configuration.auth_token
+      request['X-gitreport-Auth-Token']  = configuration.auth_token
     end
 
   end
