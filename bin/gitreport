@@ -46,7 +46,7 @@ gitreport allows the folling [options]:
     when "sync"
       GitReport::Sender.send! :stored
     when "history"
-      GitReport::Sender.send! :history
+      GitReport::BatchSender.send! :history
     else
       Trollop::die "unknown subcommand #{cmd.inspect}"
     end

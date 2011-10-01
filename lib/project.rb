@@ -12,23 +12,27 @@ module GitReport
 
     # returns the local project directory
     def path
-      @project.dir.path
+      @path ||= @project.dir.path
     end
 
-    # returns the local name of the projected extracted from the project directory
+    # returns the local name of the project extracted from the project directory
     def name
-      return "unknown" unless @project.dir.path.match(/.*\/(.*)$/)
-      return $1
+      @name ||= @project.dir.path.match(/.*\/(.*)$/).nil? ? "unknown" : $1
     end
 
     # returns an array of remote objects of the project
     def remotes
-      @project.remotes
+      @remotes ||= @project.remotes
     end
 
     # returns an array of names of all remote branches
     def remote_branches
-      @project.branches.remote.map(&:full)
+      @remote_branches ||= @project.branches.remote.map(&:full)
+    end
+
+    # returns the projects first commits hash as an identifier
+    def identifier
+      @@identifier ||= self.log.commits.first.sha
     end
 
     # returns the projects rev-list
@@ -36,10 +40,6 @@ module GitReport
       (`git rev-list --all`).split("\n")
     end
 
-    # returns the projects first commits hash as an identifier
-    def identifier
-      @@identifier ||= self.log.commits.last.sha
-    end
   end
 
 end
