@@ -42,7 +42,6 @@ Gem::Specification.new do |s|
     "lib/supplier.rb",
     "lib/trollop.rb",
     "spec/gitreport_spec.rb",
-    "spec/models/commit_data_spec.rb",
     "spec/models/commit_spec.rb",
     "spec/models/configuration_spec.rb",
     "spec/models/current_branch_spec.rb",

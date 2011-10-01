@@ -26,8 +26,9 @@ module GitReport
           http.read_timeout = configuration.timeout
           http.request request
         end
-        raise StandardError unless response.code == "200"
+        raise StandardError unless (response.code == "200" or response.code == "401")
       rescue Exception => e
+        puts "Error during sending the commit: #{e}"
         return false
       end
 
