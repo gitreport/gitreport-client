@@ -1,9 +1,11 @@
 module GitReport
+
   class Commit
 
     attr_accessor :commit
 
     def initialize commit = nil
+      @project = GitReport.project
       @commit = commit
     end
 
@@ -37,8 +39,39 @@ module GitReport
 
     # returns commits stats in more detail
     def stats
+      # TODO
+    end
 
+    # return the commits aggregated data
+    def data
+      @data ||= aggregate
+    end
+
+    # return the commits aggregated data as JSON
+    def to_json
+      data.to_json
+    end
+
+    private
+
+    def aggregate
+      data = {}
+      data[:sha]                = self.sha
+      data[:short_sha]          = self.short_sha
+      data[:author_name]        = self.author.name
+      data[:author_email]       = self.author.email
+      data[:time]               = self.time.xmlschema
+      data[:message]            = self.message
+      data[:project_path]       = @project.path
+      data[:project_name]       = @project.name
+      data[:current_branch]     = @project.branch.name
+      data[:remotes]            = @project.remotes.map(&:name)
+      data[:remote_urls]        = @project.remotes.map(&:url)
+      data[:remote_branches]    = @project.remote_branches
+      data[:project_identifier] = @project.identifier
+      data
     end
 
   end
+
 end

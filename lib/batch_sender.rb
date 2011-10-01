@@ -35,7 +35,7 @@ module GitReport
     end
 
     def self.send_data! data
-      sleep 1
+      return true
     end
 
   end
