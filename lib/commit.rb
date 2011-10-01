@@ -2,11 +2,12 @@ module GitReport
 
   class Commit
 
-    attr_accessor :commit
+    attr_accessor :commit, :project_identifier
 
-    def initialize commit = nil
-      @project = GitReport.project
-      @commit = commit
+    def initialize commit = nil, project_identifier = nil
+      @project            = GitReport.project
+      @commit             = commit
+      @project_identifier = project_identifier
     end
 
     # returns the commit hash of self
@@ -63,13 +64,13 @@ module GitReport
       data[:author_email]       = self.author.email
       data[:time]               = self.time.xmlschema
       data[:message]            = self.message
+      data[:project_identifier] = self.project_identifier
       data[:project_path]       = @project.path
       data[:project_name]       = @project.name
       data[:current_branch]     = @project.branch.name
       data[:remotes]            = @project.remotes.map(&:name)
       data[:remote_urls]        = @project.remotes.map(&:url)
       data[:remote_branches]    = @project.remote_branches
-      data[:project_identifier] = @project.identifier
       data
     end
 

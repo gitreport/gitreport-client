@@ -5,7 +5,7 @@ describe 'GitReport::Commit' do
   before :each do
     @repo    = FakeRepository.new
     @project = GitReport::Project.new(@repo.path)
-    @commit  = GitReport::Commit.new(@project.log.first)
+    @commit  = GitReport::Commit.new(@project.log.first, @project.identifier)
   end
 
   describe '#sha' do
@@ -42,6 +42,12 @@ describe 'GitReport::Commit' do
 
   describe '#stats' do
     it 'should return the commit stats'
+  end
+
+  describe '#project_identifier' do
+    it 'should equal the projects first commits sha' do
+      @commit.project_identifier.should == @project.revlist.last
+    end
   end
 
 end

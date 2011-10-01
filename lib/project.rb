@@ -32,7 +32,7 @@ module GitReport
 
     # returns the projects first commits hash as an identifier
     def identifier
-      @@identifier ||= self.log.commits.first.sha
+      @identifier ||= self.revlist.last
     end
 
     # returns the projects rev-list

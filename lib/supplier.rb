@@ -37,7 +37,7 @@ module GitReport
 
     # returns the commit that should be send now
     def self.recent_commit
-      @@commit_data ||= GitReport::Commit.new(GitReport.project.log.last)
+      @@commit_data ||= GitReport::Commit.new(GitReport.project.log.last, GitReport.project.identifier)
     end
 
     # returns local storage

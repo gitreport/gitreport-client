@@ -27,12 +27,12 @@ module GitReport
 
     # returns all commits of this project wrapped into Commit objects
     def self.all_commits
-      all_commits_raw.map{ |co| GitReport::Commit.new co }
+      all_commits_raw.map{ |co| GitReport::Commit.new(co, GitReport.project.identifier) }
     end
 
     # returns only the users commits of this project wrapped into Commit objects
     def self.user_commits
-      user_commits_raw.map{ |co| GitReport::Commit.new co }
+      user_commits_raw.map{ |co| GitReport::Commit.new(co, GitReport.project.identifier) }
     end
 
     def self.user_name
