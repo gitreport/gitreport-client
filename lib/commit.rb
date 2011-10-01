@@ -57,6 +57,7 @@ module GitReport
 
     # aggregates all the data that needs to be transfered to the server
     def aggregate
+      # TODO fucking slow
       data = {}
       data[:sha]                = self.sha
       data[:short_sha]          = self.short_sha

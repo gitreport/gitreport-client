@@ -15,12 +15,12 @@ module GitReport
 
     # returns the most recent commit
     def last
-      self.commits.last
+      @@last ||= self.commits.last
     end
 
     # returns the initial commit
     def first
-      self.commits.first
+      @@first ||= self.commits.first
     end
   end
 end

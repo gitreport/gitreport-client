@@ -40,7 +40,7 @@ module GitReport
         response = Net::HTTP.Proxy(configuration.proxy_host, configuration.proxy_port).start(configuration.host, configuration.port) do |http|
           request = Net::HTTP::Post.new(request_path options)
           headers request
-          request.body = batch.map(&:data).to_json
+          request.body = {:data => batch.map(&:data), :author => GitReport::GitConfiguration.user_name}.to_json
           http.open_timeout = configuration.timeout
           http.read_timeout = configuration.timeout
           http.request request
