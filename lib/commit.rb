@@ -54,6 +54,7 @@ module GitReport
 
     private
 
+    # aggregates all the data that needs to be transfered to the server
     def aggregate
       data = {}
       data[:sha]                = self.sha

@@ -12,6 +12,7 @@ module GitReport
         stored_commits
       when :history
         history_commits :user
+        # history_commits :all
       else
         []
       end

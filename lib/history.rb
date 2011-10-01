@@ -1,4 +1,5 @@
 module GitReport
+
   class History
 
     # returns the histories commits depending on the scope :user or :all
@@ -19,8 +20,9 @@ module GitReport
     end
 
     # returns only the users commits of this project
+    # TODO: horrable performance
     def self.user_commits_raw
-      all_commits_raw.delete_if{ |co| co.author.name != GitReport::GitConfiguration.user_name }
+      all_commits_raw.delete_if{ |co| co.author.name != user_name }
     end
 
     # returns all commits of this project wrapped into Commit objects
@@ -29,10 +31,14 @@ module GitReport
     end
 
     # returns only the users commits of this project wrapped into Commit objects
-    # TODO: horrable performance
     def self.user_commits
       user_commits_raw.map{ |co| GitReport::Commit.new co }
     end
 
+    def self.user_name
+      @@username ||= GitReport::GitConfiguration.user_name
+    end
+
   end
+
 end
