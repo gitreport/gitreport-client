@@ -11,8 +11,11 @@ module GitReport
       when :stored
         stored_commits
       when :history
-        history_commits :user
-        # history_commits :all
+        # history_commits :user #slow
+        history_commits :all    #fast
+
+        # we sort out the foreign commits on the server if the user has a single user account
+        # this way we can realize company accounts and already have all the data we need during import
       else
         []
       end
