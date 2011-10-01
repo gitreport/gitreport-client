@@ -47,7 +47,7 @@ module GitReport
 
     # returns the request path
     def self.request_path options
-      "/v#{configuration.api_version}/commits"
+      @@path ||= "/v#{configuration.api_version}/commits"
     end
 
     # returns the default headers
