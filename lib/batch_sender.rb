@@ -8,7 +8,7 @@ module GitReport
       batches(option).each_with_index do |batch, index|
         print "Sending batch #{index + 1} of #{@@num_batches} - #{index*100/@@num_batches}%\r"
         STDOUT.flush
-        send_data!(batch)
+        break unless send_data!(batch)
       end
       print "Sending batch #{@@num_batches} of #{@@num_batches} - 100%\r"
       STDOUT.flush

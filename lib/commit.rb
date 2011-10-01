@@ -67,7 +67,7 @@ module GitReport
       data[:project_identifier] = self.project_identifier
       data[:project_path]       = @project.path
       data[:project_name]       = @project.name
-      data[:current_branch]     = @project.branch.name
+      data[:current_branch]     = @project.branchname
       data[:remotes]            = @project.remotes.map(&:name)
       data[:remote_urls]        = @project.remotes.map(&:url)
       data[:remote_branches]    = @project.remote_branches

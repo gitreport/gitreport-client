@@ -40,6 +40,11 @@ module GitReport
       (`git rev-list --all`).split("\n")
     end
 
+    # returns the branch name
+    def branchname
+      @branchname ||= self.branch.name
+    end
+
   end
 
 end
