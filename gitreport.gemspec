@@ -4,15 +4,15 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{gitaccount}
-  s.version = "0.0.0"
+  s.name = "gitreport"
+  s.version = "0.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jan Roesner"]
-  s.date = %q{2011-09-16}
-  s.description = %q{gitaccount keeps track of your projects. It collects info about commited and pushed data, submits it to our servers and provides a gorgous frontend to examine, discover and extract the data that you need to generate the payment recipes for your customers. No longer searching or `what did I commit when and where`...}
-  s.email = %q{jan@roesner.it}
-  s.executables = ["register", "commit", "unregister"]
+  s.date = "2011-10-02"
+  s.description = "gitreport keeps track of your projects. It collects info about commited and pushed data, submits it to our servers and provides a gorgous frontend to examine, discover and extract the data that you need to generate the payment recipes for your customers. No longer searching or `what did I commit when and where`..."
+  s.email = "jan@roesner.it"
+  s.executables = ["gitreport"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc"
@@ -25,53 +25,74 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
-    "bin/commit",
-    "bin/register",
-    "gitaccount.gemspec",
+    "bin/gitreport",
+    "gitreport.gemspec",
+    "lib/batch_sender.rb",
     "lib/commit.rb",
-    "lib/commit_data.rb",
     "lib/configuration.rb",
     "lib/current_branch.rb",
-    "lib/gitaccount.rb",
+    "lib/git_configuration.rb",
+    "lib/gitreport.rb",
+    "lib/history.rb",
     "lib/hook.rb",
     "lib/log.rb",
     "lib/project.rb",
-    "lib/request.rb",
+    "lib/sender.rb",
     "lib/storage.rb",
-    "test/helper.rb",
-    "test/test_gitaccount.rb"
+    "lib/supplier.rb",
+    "lib/trollop.rb",
+    "spec/gitreport_spec.rb",
+    "spec/models/batch_sender_spec.rb",
+    "spec/models/commit_spec.rb",
+    "spec/models/configuration_spec.rb",
+    "spec/models/current_branch_spec.rb",
+    "spec/models/git_configuration_spec.rb",
+    "spec/models/history_spec.rb",
+    "spec/models/hook_spec.rb",
+    "spec/models/log_spec.rb",
+    "spec/models/project_spec.rb",
+    "spec/models/sender_spec.rb",
+    "spec/models/storage_spec.rb",
+    "spec/models/supplier_spec.rb",
+    "spec/spec_helper.rb",
+    "spec/support/fake_repository.rb"
   ]
-  s.homepage = %q{http://github.com/janroesner/gitaccount}
+  s.homepage = "http://github.com/janroesner/gitreport"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.7}
-  s.summary = %q{gitaccount tracks commit and push info of your git projects}
+  s.rubygems_version = "1.8.10"
+  s.summary = "gitreport tracks commit and push info of your git projects"
 
   if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<json>, [">= 0"])
       s.add_runtime_dependency(%q<git>, ["~> 1.2.5"])
       s.add_development_dependency(%q<ruby-debug>, [">= 0"])
       s.add_development_dependency(%q<rspec>, [">= 0"])
+      s.add_development_dependency(%q<webmock>, [">= 0"])
       s.add_development_dependency(%q<shoulda>, [">= 0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.6.4"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
     else
+      s.add_dependency(%q<json>, [">= 0"])
       s.add_dependency(%q<git>, ["~> 1.2.5"])
       s.add_dependency(%q<ruby-debug>, [">= 0"])
       s.add_dependency(%q<rspec>, [">= 0"])
+      s.add_dependency(%q<webmock>, [">= 0"])
       s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.6.4"])
       s.add_dependency(%q<rcov>, [">= 0"])
     end
   else
+    s.add_dependency(%q<json>, [">= 0"])
     s.add_dependency(%q<git>, ["~> 1.2.5"])
     s.add_dependency(%q<ruby-debug>, [">= 0"])
     s.add_dependency(%q<rspec>, [">= 0"])
+    s.add_dependency(%q<webmock>, [">= 0"])
     s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.6.4"])

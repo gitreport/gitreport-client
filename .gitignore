@@ -39,7 +39,9 @@ pkg
 #.\#*
 
 # For vim:
-#*.swp
+*.swp
+*.swo
+*.swn
 
 # For redcar:
 #.redcar
@@ -50,3 +52,4 @@ pkg
 bin/.commit.swp
 lib/.git_account.rb.swp
 tags
+.rdebug_hist

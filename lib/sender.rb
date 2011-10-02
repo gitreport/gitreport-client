@@ -1,10 +1,10 @@
-module GitAccount
+module GitReport
 
-  class Request
+  class Sender
 
-    # sends or saves the commits which are the most recent + stored ones
+    # sends or saves the commits
     def self.send! options = nil
-      commits = all_commits
+      commits = GitReport::Supplier.commits(options)
       commits.each do |commit|
         send_data!(commit) ? commits = commits.inject([]){ |a,i| ( a << i unless i == commit );a } : break # weird, delete fails here
       end
@@ -26,54 +26,36 @@ module GitAccount
           http.read_timeout = configuration.timeout
           http.request request
         end
-        raise StandardError unless response.code == "200"
+        raise StandardError unless (response.code == "200" or response.code == "401")
       rescue Exception => e
+        puts "Error during sending the commit: #{e}"
         return false
       end
 
       true
     end
 
-    # returns all commits that need to be sent
-    def self.all_commits
-      @@all_commits ||= (stored_commits || []).push(recent_commit)
-    end
-
-    # returns the stored commits that could not be send before
-    def self.stored_commits
-      storage.load
-    end
-
-    # returns the commit that should be send now
-    def self.recent_commit
-      @@commit_data ||= GitAccount::CommitData.new project
-    end
-
-    def self.project
-      @@project ||= GitAccount::Project.new
-    end
-
     # returns local storage
     def self.storage
-      @@storage ||= GitAccount::Storage.new(ENV['HOME'], '.gitaccount_storage')
+      @@storage ||= GitReport::Storage.new(ENV['HOME'], '.gitreport_storage')
     end
 
     # returns configuration object
     def self.configuration
-      @@configuration ||= GitAccount::Configuration.new project
+      @@configuration ||= GitReport.configuration
     end
 
     # returns the request path
     def self.request_path options
-      "/v#{configuration.api_version}/commits"
+      @@path ||= "/v#{configuration.api_version}/commits"
     end
 
     # returns the default headers
     def self.headers request
-      request['User-Agent']              = 'gitaccount-client-ruby'
+      request['User-Agent']              = 'gitreport-client-ruby'
       request['Content-Type']            = 'application/json'
       request['Accept']                  = 'application/json'
-      request['X-gitaccount-Auth-Token'] = configuration.auth_token
+      request['X-gitreport-Auth-Token']  = configuration.auth_token
     end
 
   end
