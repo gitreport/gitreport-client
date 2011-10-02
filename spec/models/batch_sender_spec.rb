@@ -25,7 +25,7 @@ describe 'GitReport::BatchSender' do
       data["commits"].collect{ |c| c["sha"] }.each do |sha|
         GitReport.project.revlist.include?(sha).should be_true
       end
-      data["project"].size.should == 6
+      data["project"].size.should == 7
       data["project"]["project_name"].should == GitReport.project.name
     end
   end

@@ -79,7 +79,7 @@ describe 'GitReport::Project' do
     it 'should return the projects core data as a hash' do
       data = GitReport.project.data
       data.should be_a(Hash)
-      data.size.should == 6
+      data.size.should == 7
       data[:project_path].should    == GitReport.project.path
       data[:project_name].should    == GitReport.project.name
       data[:current_branch].should  == GitReport.project.branchname
