@@ -69,8 +69,8 @@ module GitReport
       data[:author_email]       = self.author.email
       data[:time]               = self.time.xmlschema
       data[:message]            = self.message
-      data[:project_identifier] = self.project_identifier
       if scope == :single
+        data[:project_identifier] = self.project_identifier
         data[:project_path]       = @project.path
         data[:project_name]       = @project.name
         data[:current_branch]     = @project.branchname
