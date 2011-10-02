@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jan Roesner"]
-  s.date = "2011-10-01"
+  s.date = "2011-10-02"
   s.description = "gitreport keeps track of your projects. It collects info about commited and pushed data, submits it to our servers and provides a gorgous frontend to examine, discover and extract the data that you need to generate the payment recipes for your customers. No longer searching or `what did I commit when and where`..."
   s.email = "jan@roesner.it"
   s.executables = ["gitreport"]
@@ -42,6 +42,7 @@ Gem::Specification.new do |s|
     "lib/supplier.rb",
     "lib/trollop.rb",
     "spec/gitreport_spec.rb",
+    "spec/models/batch_sender_spec.rb",
     "spec/models/commit_spec.rb",
     "spec/models/configuration_spec.rb",
     "spec/models/current_branch_spec.rb",
