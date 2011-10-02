@@ -40,7 +40,7 @@ module GitReport
         response = Net::HTTP.Proxy(configuration.proxy_host, configuration.proxy_port).start(configuration.host, configuration.port) do |http|
           request = Net::HTTP::Post.new(request_path options)
           headers request
-          request.body = {:data => batch.map(&:data), :author => GitReport::GitConfiguration.user_name}.to_json
+          request.body = body
           http.open_timeout = configuration.timeout
           http.read_timeout = configuration.timeout
           http.request request
@@ -54,6 +54,15 @@ module GitReport
       true
     end
 
+    # returns the body as an aggregate of author, project and commit data
+    def self.body batch
+      {
+        :commits => batch.map(&:batch_data),
+        :author  =>  GitReport::GitConfiguration.user_name,
+        :project => GitReport.project.data
+      }.to_json
+    end
+
     # returns configuration object
     def self.configuration
       @@configuration ||= GitReport.configuration
@@ -61,7 +70,7 @@ module GitReport
 
     # returns the request path
     def self.request_path options
-      @@path ||= "/v#{configuration.api_version}/commit_batches"
+      @@path ||= "/v#{configuration.api_version}/projects"
     end
 
     # returns the default headers

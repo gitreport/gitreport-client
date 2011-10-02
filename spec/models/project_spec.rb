@@ -69,5 +69,25 @@ describe 'GitReport::Project' do
     end
   end
 
+  describe '#branchname' do
+    it 'should return the branch name' do
+      GitReport.project.branchname.should == "master"
+    end
+  end
+
+  describe '#data' do
+    it 'should return the projects core data as a hash' do
+      data = GitReport.project.data
+      data.should be_a(Hash)
+      data.size.should == 6
+      data[:project_path].should    == GitReport.project.path
+      data[:project_name].should    == GitReport.project.name
+      data[:current_branch].should  == GitReport.project.branchname
+      data[:remotes].should         == GitReport.project.remotes.map(&:name)
+      data[:remote_urls].should     == GitReport.project.remotes.map(&:url)
+      data[:remote_branches].should == GitReport.project.remote_branches
+    end
+  end
+
 end
 

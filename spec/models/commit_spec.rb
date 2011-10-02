@@ -1,9 +1,11 @@
+# require 'spec_helper'
 require 'gitreport'
 
 describe 'GitReport::Commit' do
 
   before :each do
     @repo    = FakeRepository.new
+    GitReport.stub!(:project).and_return(GitReport::Project.new(@repo.path))
     @project = GitReport::Project.new(@repo.path)
     @commit  = GitReport::Commit.new(@project.log.first, @project.identifier)
   end
@@ -47,6 +49,37 @@ describe 'GitReport::Commit' do
   describe '#project_identifier' do
     it 'should equal the projects first commits sha' do
       @commit.project_identifier.should == @project.revlist.last
+    end
+  end
+
+  describe '#data' do
+    it 'should return the data to be transferred during a single commit including project data' do
+      data = @commit.data
+      data.size.should == 13
+      [:project_path, :project_name, :current_branch, :remotes, :remote_urls, :remote_branches].each do |attr|
+        data.keys.include?(attr).should be_true
+      end
+    end
+  end
+
+  describe '#batch_data' do
+    it 'should return the data to be transferred during a batch import without project data' do
+      data = @commit.batch_data
+      data.size.should == 7
+      [:project_path, :project_name, :current_branch, :remotes, :remote_urls, :remote_branches].each do |attr|
+        data.keys.include?(attr).should be_false
+      end
+    end
+  end
+
+  describe '#to_json' do
+    it 'should return the full commit data including project data as JSON' do
+      json_string = @commit.to_json
+      data = JSON.parse(json_string)
+
+      data.each_pair do |key, value|
+        @commit.data[key.to_sym].should == value
+      end
     end
   end
 

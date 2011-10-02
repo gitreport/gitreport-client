@@ -46,7 +46,7 @@ describe 'GitReport::Sender' do
       GitReport::Sender.send! :stored
     end
 
-    it 'should send all commits from projects revlist when called with :history' do
+    it 'should send all commits (including foreign ones) from projects revlist when called with :history' do
       @project.project.branch('new_branch').checkout
 
       File.open("#{@project.path}/file4", 'w+') do |file|
@@ -57,7 +57,7 @@ describe 'GitReport::Sender' do
       @project.project.commit('commit with file4 on new_branch')
 
       @project.project.branch('master').checkout
-      GitReport::Sender.should_receive(:send_data!).exactly(3).times.and_return(true)
+      GitReport::Sender.should_receive(:send_data!).exactly(4).times.and_return(true)
 
       GitReport::Sender.send! :history
     end
