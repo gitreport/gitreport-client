@@ -43,9 +43,13 @@ module GitReport
       # TODO
     end
 
-    # return the commits aggregated data
+    # return the commits aggregated data in case a single commit is transferred
     def data
-      @data ||= aggregate
+      @data ||= aggregate(:single)
+    end
+
+    def batch_data
+      @data ||= aggregate(:batch)
     end
 
     # return the commits aggregated data as JSON
@@ -56,8 +60,8 @@ module GitReport
     private
 
     # aggregates all the data that needs to be transfered to the server
-    def aggregate
-      # TODO fucking slow
+    def aggregate scope
+      # TODO fucking slow in case full data shall be returned
       data = {}
       data[:sha]                = self.sha
       data[:short_sha]          = self.short_sha
@@ -66,12 +70,14 @@ module GitReport
       data[:time]               = self.time.xmlschema
       data[:message]            = self.message
       data[:project_identifier] = self.project_identifier
-      data[:project_path]       = @project.path
-      data[:project_name]       = @project.name
-      data[:current_branch]     = @project.branchname
-      data[:remotes]            = @project.remotes.map(&:name)
-      data[:remote_urls]        = @project.remotes.map(&:url)
-      data[:remote_branches]    = @project.remote_branches
+      if scope == :single
+        data[:project_path]       = @project.path
+        data[:project_name]       = @project.name
+        data[:current_branch]     = @project.branchname
+        data[:remotes]            = @project.remotes.map(&:name)
+        data[:remote_urls]        = @project.remotes.map(&:url)
+        data[:remote_branches]    = @project.remote_branches
+      end
       data
     end
 

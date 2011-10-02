@@ -34,8 +34,9 @@ module GitReport
     end
 
     # returns all commits of the actual user that were taken in the past
+    # DO NOT cache here!!
     def self.history_commits scope
-      @@history_commits ||= GitReport::History.commits(scope)
+      GitReport::History.commits(scope)
     end
 
     # returns the commit that should be send now

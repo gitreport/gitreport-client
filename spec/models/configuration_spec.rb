@@ -19,12 +19,13 @@ describe 'GitReport::Configuration' do
 
     it 'should set the config from a project config file in case one exists' do
       @repo.create_project_config_file
+      config = GitReport::Configuration.new
 
-      GitReport.configuration.host.should       == "some.host.anywhere"
-      GitReport.configuration.port.should       == 42
-      GitReport.configuration.auth_token.should == "12345ab"
-      GitReport.configuration.proxy_host.should == "some.proxy.host"
-      GitReport.configuration.proxy_port.should == 23
+      config.host.should       == "some.host.anywhere"
+      config.port.should       == 42
+      config.auth_token.should == "12345ab"
+      config.proxy_host.should == "some.proxy.host"
+      config.proxy_port.should == 23
     end
 
     it 'should set the config from the user file in case no project config file exists' do

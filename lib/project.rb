@@ -45,6 +45,25 @@ module GitReport
       @branchname ||= self.branch.name
     end
 
+    # returns projects core data as a hash for transfer of a commit batch
+    def data
+      @data ||= aggregate
+    end
+
+    private
+
+    # aggregates the projects core data
+    def aggregate
+      data = {}
+      data[:project_path]       = self.path
+      data[:project_name]       = self.name
+      data[:current_branch]     = self.branchname
+      data[:remotes]            = self.remotes.map(&:name)
+      data[:remote_urls]        = self.remotes.map(&:url)
+      data[:remote_branches]    = self.remote_branches
+      data
+    end
+
   end
 
 end
