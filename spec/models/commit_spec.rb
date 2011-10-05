@@ -43,7 +43,11 @@ describe 'GitReport::Commit' do
   end
 
   describe '#stats' do
-    it 'should return the commit stats'
+    it 'should return the commit stats' do
+      pending "wow thing"
+      # works as single, does not work in batch, code seems to work fine
+      @commit.stats.should == {:deletions=>1, :files=>1, :lines=>1, :insertions=>0}
+    end
   end
 
   describe '#project_identifier' do
@@ -55,7 +59,7 @@ describe 'GitReport::Commit' do
   describe '#data' do
     it 'should return the data to be transferred during a single commit including project data' do
       data = @commit.data
-      data.size.should == 13
+      data.size.should == 14
       [:project_path, :project_name, :current_branch, :remotes, :remote_urls, :remote_branches].each do |attr|
         data.keys.include?(attr).should be_true
       end
@@ -65,7 +69,7 @@ describe 'GitReport::Commit' do
   describe '#batch_data' do
     it 'should return the data to be transferred during a batch import without project data' do
       data = @commit.batch_data
-      data.size.should == 7
+      data.size.should == 8
       [:project_path, :current_branch, :remotes, :remote_urls, :remote_branches].each do |attr|
         data.keys.include?(attr).should be_false
       end

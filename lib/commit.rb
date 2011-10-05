@@ -45,7 +45,9 @@ module GitReport
 
     # returns commits stats in more detail
     def stats
-      # TODO
+      @commit.diff(@commit.parent).stats[:total]
+    rescue
+      nil
     end
 
     # return the commits aggregated data in case a single commit is transferred
@@ -74,6 +76,7 @@ module GitReport
       data[:author_email]       = self.author.email
       data[:time]               = self.time.xmlschema
       data[:message]            = self.message
+      data[:stats]              = self.stats
       data[:project_name]       = @project.name
       if scope == :single
         data[:project_identifier] = self.project_identifier
