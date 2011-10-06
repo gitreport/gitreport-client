@@ -7,24 +7,24 @@ describe 'GitReport::Commit' do
     @repo    = FakeRepository.new
     GitReport.stub!(:project).and_return(GitReport::Project.new(@repo.path))
     @project = GitReport::Project.new(@repo.path)
-    @commit  = GitReport::Commit.new(@project.log.first, @project.identifier)
+    @commit  = GitReport::Commit.new(@project.log.last, @project.identifier)
   end
 
   describe '#sha' do
     it 'should return the sha of a commit' do
-      @commit.sha.should == @project.log.first.sha
+      @commit.sha.should == @project.log.last.sha
     end
   end
 
   describe '#short_sha' do
     it 'should return the shortened sha' do
-      @commit.short_sha.should == @project.log.first.sha[0..6]
+      @commit.short_sha.should == @project.log.last.sha[0..6]
     end
   end
 
   describe '#message' do
     it 'should return the commits message' do
-      @commit.message.should == @project.log.first.message
+      @commit.message.should == @project.log.last.message
     end
   end
 
@@ -37,16 +37,18 @@ describe 'GitReport::Commit' do
 
   describe '#author' do
     it 'should return the correct author' do
-      @commit.author.name.should  == "Bugs Bunny"
-      @commit.author.email.should == "bugs@acme.com"
+      @commit.author.name.should  == "Duffy Duck"
+      @commit.author.email.should == "duffy@acme.com"
     end
   end
 
   describe '#stats' do
     it 'should return the commit stats' do
-      pending "wow thing"
-      # works as single, does not work in batch, code seems to work fine
-      @commit.stats.should == {:deletions=>1, :files=>1, :lines=>1, :insertions=>0}
+      stats = GitReport::Commit.new(@project.log.commits.first, @project.identifier).stats
+      stats[:deletions].should  == 1
+      stats[:files].should      == 1
+      stats[:lines].should      == 1
+      stats[:insertions].should == 0
     end
   end
 
