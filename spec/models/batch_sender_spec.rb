@@ -31,7 +31,13 @@ describe 'GitReport::BatchSender' do
   end
 
   describe '#batches' do
-    it 'should create batches in relation to batchsize from configuration'
+    it 'should create batches in relation to batchsize from configuration' do
+      GitReport.configuration.stub!(:batchsize).and_return(2)
+      batches = GitReport::BatchSender.batches(:history)
+      batches.size.should       == 2
+      batches.first.size.should == 2
+      batches.last.size.should  == 1
+    end
   end
 
 end
