@@ -6,6 +6,7 @@ gem 'git', '~>1.2.5'
 group :development do
   gem 'ruby-debug'
   # gem 'ruby-debug19'
+  gem 'spork', '>0.9.0.rc'
   gem 'rspec'
   gem 'webmock'
   gem "shoulda", ">= 0"
