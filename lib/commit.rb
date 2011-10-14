@@ -12,7 +12,7 @@ module GitReport
 
     # returns the commit hash of self
     def sha
-      self.commit.sha
+      @commit.sha
     end
 
     # returns the short version of the commit hash of self
@@ -22,25 +22,32 @@ module GitReport
 
     # returns the commit message of self
     def message
-      self.commit.message
+      @commit.message
     end
 
     # returns the time when self was committed
     def time
-      Time.parse(self.commit.author.date.to_s)
+      Time.parse(inner_author.date.to_s)
     end
 
-    # returns a struct containing author information name and email of that commit
+    # returns a chached struct containing author information name and email of that commit
     def author
+      @author ||= get_author
+    end
+
+    # returns the author struct fr the first time
+    def get_author
       author = OpenStruct.new
-      author.name = self.commit.author.name
-      author.email = self.commit.author.email
+      author.name = inner_author.name
+      author.email = inner_author.email
       author
     end
 
     # returns commits stats in more detail
     def stats
-      # TODO
+      @commit.diff(@commit.parent).stats[:total]
+    rescue
+      nil
     end
 
     # return the commits aggregated data in case a single commit is transferred
@@ -69,6 +76,7 @@ module GitReport
       data[:author_email]       = self.author.email
       data[:time]               = self.time.xmlschema
       data[:message]            = self.message
+      data[:stats]              = self.stats
       data[:project_name]       = @project.name
       if scope == :single
         data[:project_identifier] = self.project_identifier
@@ -81,6 +89,10 @@ module GitReport
       data
     end
 
+    # returns the cached author object from the embedded original git object
+    def inner_author
+      @commit.author
+    end
   end
 
 end
