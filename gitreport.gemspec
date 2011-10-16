@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "gitreport"
-  s.version = "0.0.2"
+  s.version = "0.0.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jan Roesner"]
@@ -31,6 +31,23 @@ Gem::Specification.new do |s|
     "lib/commit.rb",
     "lib/configuration.rb",
     "lib/current_branch.rb",
+    "lib/git.rb",
+    "lib/git/author.rb",
+    "lib/git/base.rb",
+    "lib/git/branch.rb",
+    "lib/git/branches.rb",
+    "lib/git/diff.rb",
+    "lib/git/index.rb",
+    "lib/git/lib.rb",
+    "lib/git/log.rb",
+    "lib/git/object.rb",
+    "lib/git/path.rb",
+    "lib/git/remote.rb",
+    "lib/git/repository.rb",
+    "lib/git/stash.rb",
+    "lib/git/stashes.rb",
+    "lib/git/status.rb",
+    "lib/git/working_directory.rb",
     "lib/git_configuration.rb",
     "lib/gitreport.rb",
     "lib/history.rb",
