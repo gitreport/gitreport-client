@@ -31,7 +31,6 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.0.0)
-  git (~> 1.2.5)
   jeweler (~> 1.6.4)
   json
   rcov
