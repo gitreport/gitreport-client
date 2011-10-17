@@ -131,7 +131,6 @@ module Git
       else
         hsh_array = []        
       end
-    
       data.each do |line|
         line = line.chomp
         if line == ''
@@ -142,12 +141,11 @@ module Git
           data = line.split
           key = data.shift
           value = data.join(' ')
-          # Leads to a bug in case the commit message has a line beginning with the work 'commit'
-          # if key == 'commit'
-          #   sha = value
-          #   hsh_array << hsh if hsh
-          #   hsh = {'sha' => sha, 'message' => '', 'parent' => []}
-          # end
+          if key == 'commit' && value.match(/^[a-f0-9]{40}$/)
+            sha = value
+            hsh_array << hsh if hsh
+            hsh = {'sha' => sha, 'message' => '', 'parent' => []}
+          end
           if key == 'parent'
             hsh[key] << value
           else
