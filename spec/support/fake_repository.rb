@@ -55,6 +55,31 @@ class FakeRepository
     return @project_dir
   end
 
+  def create_error_commit1
+    @project_dir = Dir.new(File.dirname(Tempfile.new('fake').path)).path + "/project"
+    FileUtils.rm_rf Dir.glob(@project_dir)
+    FileUtils.rmdir @project_dir if File.exists?(@project_dir)
+    Dir.mkdir(@project_dir) unless File.exists?(@project_dir)
+
+    # create a project
+    project = Git.init(@project_dir)
+
+    # add a first commit
+    File.open("#{@project_dir}/file1", 'w+') do |file|
+      file.write "file content 1"
+    end
+
+    project.add('file1')
+    project.commit('commit with file1')
+
+    File.open("#{@project_dir}/file2", 'w+') do |file|
+      file.write "This commit will cause an error in the git library"
+    end
+
+    project.add('file2')
+    project.commit("Resque to the rescue\n\ncommit batches are processed async now.")
+  end
+
   def create_project_config_file
     File.open("#{@project_dir}/.gitreport", 'w+') do |file|
       file.write "---\n"

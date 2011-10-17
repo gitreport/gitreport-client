@@ -28,6 +28,13 @@ describe 'GitReport::BatchSender' do
       data["project"].size.should == 7
       data["project"]["project_name"].should == GitReport.project.name
     end
+
+    it 'should not raise an error in case of the word commit at the start of a commit message' do
+      @repo.create_error_commit1
+
+      lambda{ body = GitReport::BatchSender.body(GitReport::BatchSender.batches(:history).first) }.should_not raise_error
+    end
+
   end
 
   describe '#batches' do
