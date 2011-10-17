@@ -43,11 +43,32 @@ module GitReport
           request.body = body(batch)
           http.open_timeout = configuration.timeout
           http.read_timeout = configuration.timeout
-          http.request request
+          http.request request unless GitReport.global_opts[:dry_run]
         end
-        raise StandardError unless (response.code == "200" or response.code == "401")
+        raise GitReport::ServerError unless (response.code == "200" or response.code == "401") unless GitReport.global_opts[:dry_run]
       rescue Exception => e
-        puts "Error during sending the commit batch: #{e}"
+        if e.is_a?(GitReport::ServerError)
+          puts "A server error occured during data transfer."
+          if GitReport.global_opts[:trace]
+            puts "Exception: #{e}\n"
+            puts "Message: #{JSON.parse(response.body)["message"]}\n"
+          else
+            puts "Run with --trace to get more info."
+          end
+          exit
+        else
+          puts "A client error occured during data transfer."
+          if GitReport.global_opts[:trace]
+            puts "Exception: #{e}\n"
+            e.backtrace.each do |line|
+              puts "#{line}\n"
+            end
+          else
+            puts "Run with --trace to get more info."
+          end
+          exit
+        end
+
         return false
       end
 
