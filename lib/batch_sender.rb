@@ -43,9 +43,9 @@ module GitReport
           request.body = body(batch)
           http.open_timeout = configuration.timeout
           http.read_timeout = configuration.timeout
-          http.request request
+          http.request request unless GitReport.global_opts[:dry_run]
         end
-        raise GitReport::ServerError unless (response.code == "200" or response.code == "401")
+        raise GitReport::ServerError unless (response.code == "200" or response.code == "401") unless GitReport.global_opts[:dry_run]
       rescue Exception => e
         if e.is_a?(GitReport::ServerError)
           puts "A server error occured during data transfer."
