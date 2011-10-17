@@ -18,6 +18,8 @@ require 'supplier'
 
 module GitReport
 
+  class ServerError < StandardError;end
+
   # mattr_reader
   def self.project
     @@project ||= GitReport::Project.new
@@ -25,6 +27,14 @@ module GitReport
 
   def self.configuration
     @@config ||= GitReport::Configuration.new
+  end
+
+  def self.global_opts= options={}
+    @@global_opts = options
+  end
+
+  def self.global_opts
+    @@global_opts || {}
   end
 
 end

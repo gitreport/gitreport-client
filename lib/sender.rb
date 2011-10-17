@@ -4,7 +4,21 @@ module GitReport
 
     # sends or saves the commits
     def self.send! options = nil
-      commits = GitReport::Supplier.commits(options)
+      begin
+        commits = GitReport::Supplier.commits(options)
+      rescue Exception => e
+        puts "A client error occured during data transfer."
+        if GitReport.global_opts[:trace]
+          puts "Exception: #{e}\n"
+          e.backtrace.each do |line|
+            puts "#{line}\n"
+          end
+        else
+          puts "Run with --trace to get more info."
+        end
+        exit
+      end
+
       commits.each do |commit|
         send_data!(commit) ? commits = commits.inject([]){ |a,i| ( a << i unless i == commit );a } : break # weird, delete fails here
       end
@@ -26,9 +40,21 @@ module GitReport
           http.read_timeout = configuration.timeout
           http.request request
         end
-        raise StandardError unless (response.code == "201" or response.code == "401")
+        raise GitReport::ServerError unless (response.code == "201" or response.code == "401")
       rescue Exception => e
-        puts "Error during sending the commit: #{e}"
+        if e.is_a?(GitReport::ServerError)
+          puts "A server error occured during data transfer."
+          if GitReport.global_opts[:trace]
+            puts "Exception: #{e}\n"
+            puts "Message: #{JSON.parse(response.body)["message"]}\n"
+          else
+            puts "Run with --trace to get more info."
+          end
+        else
+          puts "A client error occured during data transfer."
+          puts "Exception: #{e}\n"
+        end
+
         return false
       end
 

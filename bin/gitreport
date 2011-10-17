@@ -29,11 +29,14 @@ gitreport allows the folling [options]:
     EOS
 
     opt :dry_run, "Don't actually do anything", :short => "-n"
+    opt :trace, "Print out stack trace in case of an error", :short => "-t"
     stop_on SUB_COMMANDS
   end
 
   cmd = ARGV.shift
   Trollop::die "You must specify at least one command" unless cmd
+
+  GitReport.global_opts = global_opts
 
   cmd_opts =
     case cmd
