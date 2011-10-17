@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "gitreport"
-  s.version = "0.0.3"
+  s.version = "0.0.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jan Roesner"]
-  s.date = "2011-10-16"
+  s.date = "2011-10-17"
   s.description = "gitreport keeps track of your projects. It collects info about commited and pushed data, submits it to our servers and provides a gorgous frontend to examine, discover and extract the data that you need to generate the payment recipes for your customers. No longer searching or `what did I commit when and where`..."
   s.email = "jan@roesner.it"
   s.executables = ["gitreport"]
