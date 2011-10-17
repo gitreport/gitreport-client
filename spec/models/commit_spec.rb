@@ -71,7 +71,7 @@ describe 'GitReport::Commit' do
   describe '#batch_data' do
     it 'should return the data to be transferred during a batch import without project data' do
       data = @commit.batch_data
-      data.size.should == 8
+      data.size.should == 7
       [:project_path, :current_branch, :remotes, :remote_urls, :remote_branches].each do |attr|
         data.keys.include?(attr).should be_false
       end
