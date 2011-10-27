@@ -62,7 +62,7 @@ module GitReport
         end
         grlog(0 ,'send_data! - A server error occured during data transfer.')
         grlog(0, "send_data! - Exception: #{e}")
-        grlog(0, "send_data! - Message: #{JSON.parse(response.body)["message"]}")
+        grlog(0, "send_data! - Message: #{JSON.parse(response.body)["message"]}") if response
 
         return false
       end
