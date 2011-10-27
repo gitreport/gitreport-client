@@ -40,7 +40,9 @@ module GitReport
         "auth_token"  => "is_unset_check_your_config",
         "api_version" => 1,
         "timeout"     => 5,
-        "batchsize"   => 100
+        "batchsize"   => 100,
+        "logfile"     => "#{ENV["HOME"]}/.gitreport.log",
+        "loglevel"    => 0
       }
     end
 
