@@ -13,7 +13,7 @@ module GitReport
     # provides method grlog in every class
     class << self.superclass
       def grlog level, message
-        ::GitReport::Logger.log level, self.to_s + "#" + message
+        ::GitReport::Logger.log level, Time.now.to_s + " - " + self.to_s + " #" + message
       end
     end
 

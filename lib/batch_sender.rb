@@ -55,6 +55,9 @@ module GitReport
           else
             puts "Run with --trace to get more info."
           end
+          grlog(0 ,'send_data! - A server error occured during data transfer.')
+          grlog(0, "send_data! - Exception: #{e}")
+          grlog(0, "send_data! - Message: #{JSON.parse(response.body)["message"]}")
           exit
         else
           puts "A client error occured during data transfer."
@@ -65,6 +68,12 @@ module GitReport
             end
           else
             puts "Run with --trace to get more info."
+          end
+          grlog(0, "send_data! - A client error occures during data transfer.")
+          grlog(0, "send_data! - Exception: #{e}")
+          grlog(0, "send_data! - Backtrace:")
+          e.backtrace.each do |line|
+            grlog(0, line)
           end
           exit
         end
