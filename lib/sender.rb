@@ -48,11 +48,12 @@ module GitReport
         end
         raise GitReport::ServerError unless (response.code == "201" or response.code == "401") unless GitReport.global_opts[:dry_run]
       rescue Exception => e
+        error_message = JSON.parse(response.body)["message"] rescue response.body
         if e.is_a?(GitReport::ServerError)
           puts "A server error occured during data transfer."
           if GitReport.global_opts[:trace]
             puts "Exception: #{e}\n"
-            puts "Message: #{JSON.parse(response.body)["message"]}\n"
+            puts "Message: #{error_message}\n"
           else
             puts "Run with --trace to get more info."
           end
@@ -62,7 +63,7 @@ module GitReport
         end
         grlog(0 ,'send_data! - A server error occured during data transfer.')
         grlog(0, "send_data! - Exception: #{e}")
-        grlog(0, "send_data! - Message: #{JSON.parse(response.body)["message"]}") if response
+        grlog(0, "send_data! - Message: #{error_message}") if response
 
         return false
       end
