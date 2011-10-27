@@ -1,4 +1,4 @@
-require 'logger'
+require 'g_logger'
 require 'git'
 require 'json'
 require 'net/http'
