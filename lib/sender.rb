@@ -37,6 +37,7 @@ module GitReport
 
     # sends the commit data to the server
     def self.send_data! commit, options = nil
+      grlog(1, 'send_data started')
       begin
         response = Net::HTTP.Proxy(configuration.proxy_host, configuration.proxy_port).start(configuration.host, configuration.port) do |http|
           request = Net::HTTP::Post.new(request_path options)
@@ -46,29 +47,37 @@ module GitReport
           http.read_timeout = configuration.timeout
           http.request request unless GitReport.global_opts[:dry_run]
         end
+        grlog(1, response ? "send_data responded with #{response.code}" : "send_data had no response")
         raise GitReport::ServerError unless (response.code == "201" or response.code == "401") unless GitReport.global_opts[:dry_run]
       rescue Exception => e
-        error_message = JSON.parse(response.body)["message"] rescue response.body
-        if e.is_a?(GitReport::ServerError)
-          puts "A server error occured during data transfer."
-          if GitReport.global_opts[:trace]
-            puts "Exception: #{e}\n"
-            puts "Message: #{error_message}\n"
-          else
-            puts "Run with --trace to get more info."
-          end
-        else
-          puts "A client error occured during data transfer."
-          puts "Exception: #{e}\n"
-        end
-        grlog(0 ,'send_data! - A server error occured during data transfer.')
-        grlog(0, "send_data! - Exception: #{e}")
-        grlog(0, "send_data! - Message: #{error_message}") if response
-
+        communicate e, response
         return false
       end
 
       true
+    end
+
+    # logs and puts the error according to its conditions and configuration
+    # TODO refactor me!
+    def self.communicate exception, response
+      both, cmd, log = [], [], []
+      if exception.is_a?(GitReport::ServerError)
+        @error_type = "server error"
+        @details = JSON.parse(response.body)["message"] rescue response.body
+      else
+        @error_type = "client error"
+        @details = exception.backtrace
+      end
+      both << "A #{@error_type} occured during data transfer."
+      both << "Exception: #{exception}"
+      if GitReport.global_opts[:trace]
+        cmd << @details
+      else
+        cmd << "Run with --trace to get more info."
+      end
+      log << @details
+      puts (both + cmd).join("\n")
+      (both + log).each{ |line| grlog(0, "send_data! #{line}")}
     end
 
     # returns local storage

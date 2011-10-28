@@ -36,6 +36,7 @@ module GitReport
 
     # sends the commit batch data to the server
     def self.send_data! batch, options = nil
+      grlog(1, 'send_data started')
       begin
         response = Net::HTTP.Proxy(configuration.proxy_host, configuration.proxy_port).start(configuration.host, configuration.port) do |http|
           request = Net::HTTP::Post.new(request_path options)
@@ -45,10 +46,11 @@ module GitReport
           http.read_timeout = configuration.timeout
           http.request request unless GitReport.global_opts[:dry_run]
         end
+        grlog(1, response ? "send_data responded with #{response.code}" : "send_data had no response")
         raise GitReport::ServerError unless (response.code == "200" or response.code == "401") unless GitReport.global_opts[:dry_run]
       rescue Exception => e
-        error_message = JSON.parse(response.body)["message"] rescue response.body
         if e.is_a?(GitReport::ServerError)
+          error_message = JSON.parse(response.body)["message"] rescue response.body
           puts "A server error occured during data transfer."
           if GitReport.global_opts[:trace]
             puts "Exception: #{e}\n"
@@ -58,7 +60,7 @@ module GitReport
           end
           grlog(0 ,'send_data! - A server error occured during data transfer.')
           grlog(0, "send_data! - Exception: #{e}")
-          grlog(0, "send_data! - Message: #{error_message}") if response
+          grlog(0, "send_data! - Message: #{error_message}") if error_message
           exit
         else
           puts "A client error occured during data transfer."
