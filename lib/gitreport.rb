@@ -20,6 +20,8 @@ require 'supplier'
 
 module GitReport
 
+  @@global_opts ||= nil
+
   class ServerError < StandardError;end
 
   # mattr_reader

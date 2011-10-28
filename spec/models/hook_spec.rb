@@ -18,7 +18,7 @@ describe 'GitReport::Hook' do
       (File.exists?(hook_file)).should be_true
       content = File.open(hook_file, 'r').read
 
-      content.match(/\nbundle\sexec\sgitreport\scommit\s&\n/).should be_true
+      content.match(/\nnohup\sbundle\sexec\sgitreport\scommit\s>\s\/dev\/null\s2>\s\/dev\/null\s<\s\/dev\/null\s&\n/).should be_true
     end
 
     it 'should insert the gitreport hook into an existing post-commit hook file' do
@@ -30,7 +30,7 @@ describe 'GitReport::Hook' do
 
       GitReport::Hook.set!
       content = File.open(hook_file, 'r').read
-      content.match(/\nbundle\sexec\sgitreport\scommit\s&\n/).should be_true
+      content.match(/\nnohup\sbundle\sexec\sgitreport\scommit\s>\s\/dev\/null\s2>\s\/dev\/null\s<\s\/dev\/null\s&\n/).should be_true
     end
   end
 
@@ -57,7 +57,7 @@ describe 'GitReport::Hook' do
       (File.exists?(hook_file)).should be_true
       content = File.open(hook_file, 'r').read
       content.should match(/\ssome\spreexisting\shook\sfile\n/)
-      content.should_not match(/\nbundle\sexec\sgitreport\scommit\s&\n/)
+      content.should_not match(/\nnohup\sbundle\sexec\sgitreport\scommit\s>\s\/dev\/null\s2>\s\/dev\/null\s<\s\/dev\/null\s&\n/)
     end
   end
 end
