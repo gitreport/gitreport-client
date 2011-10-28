@@ -7,21 +7,7 @@ module GitReport
       begin
         commits = GitReport::Supplier.commits(options)
       rescue Exception => e
-        puts "A client error occured during data transfer."
-        if GitReport.global_opts[:trace]
-          puts "Exception: #{e}\n"
-          e.backtrace.each do |line|
-            puts "#{line}\n"
-          end
-        else
-          puts "Run with --trace to get more info."
-        end
-        grlog(0, "send! - A client error occures during data transfer.")
-        grlog(0, "send! - Exception: #{e}")
-        grlog(0, "send! - Backtrace:")
-        e.backtrace.each do |line|
-          grlog(0, line)
-        end
+        communicate e, nil
         exit
       end
 
