@@ -54,7 +54,7 @@ module GitReport
 
     # returns true if the hook file already has a hook line in
     def self.line_exists?
-      if file_content.match(/bundle\sexec\sgitreport\scommit\s&/)
+      if file_content.match(/nohup\sbundle\sexec\sgitreport\scommit\s>\s\/dev\/null\s2>\s\/dev\/null\s<\s\/dev\/null\s&/)
         return true
       end
 
@@ -76,7 +76,7 @@ module GitReport
       "#!/bin/sh\n" +
       "# This is a post-commit hook created by gitreport (http://gitreport.com)\n" +
       "#\n" +
-      "# To remove it issue 'bundle exec unregister' in the projects main directory\n" +
+      "# To remove it issue 'bundle exec deactivate' in the projects main directory\n" +
       "# In case the gitreport gem is not installed anymore, simply remove this hook file\n" +
       "#\n" +
       "# Be aware of other post commit hooks that my be mentioned here!\n"
@@ -84,7 +84,7 @@ module GitReport
 
     # returns the line to activate gitreport via post commit hook
     def self.line
-      "\nbundle exec gitreport commit &\n"
+      "\nnohup bundle exec gitreport commit > /dev/null 2> /dev/null < /dev/null &\n"
     end
 
     # removes the hook
@@ -105,7 +105,7 @@ module GitReport
 
     # returns true if the hook file is ours and was not changed
     def self.hook_file_unchanged?
-      Digest::SHA1.hexdigest(file_content) == "9c69e61ce35b8ce21968343411e6abeb89b237dd"
+      Digest::SHA1.hexdigest(file_content) == "e4032a91bb8e07e09ea637c803d8763e26e165e7"
     end
 
     # removes our hook line from hook file
@@ -115,7 +115,7 @@ module GitReport
 
     # removes our hook line from given content
     def self.clean_up content
-      content.gsub(/\nbundle\sexec\sgitreport\scommit\s&\n/,'')
+      content.gsub(/\nnohup\sbundle\sexec\sgitreport\scommit\s>\s\/dev\/null\s2>\s\/dev\/null\s<\s\/dev\/null\s&\n/,'')
     end
 
   end

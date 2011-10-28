@@ -1,6 +1,6 @@
 module GitReport
 
-  class BatchSender
+  class BatchSender < GenericSender
 
     # send the given commits chunked
     def self.send! option = nil
@@ -36,6 +36,7 @@ module GitReport
 
     # sends the commit batch data to the server
     def self.send_data! batch, options = nil
+      grlog(1, 'send_data started')
       begin
         response = Net::HTTP.Proxy(configuration.proxy_host, configuration.proxy_port).start(configuration.host, configuration.port) do |http|
           request = Net::HTTP::Post.new(request_path options)
@@ -45,40 +46,11 @@ module GitReport
           http.read_timeout = configuration.timeout
           http.request request unless GitReport.global_opts[:dry_run]
         end
+        grlog(1, response ? "send_data responded with #{response.code}" : "send_data had no response")
         raise GitReport::ServerError unless (response.code == "200" or response.code == "401") unless GitReport.global_opts[:dry_run]
       rescue Exception => e
-        if e.is_a?(GitReport::ServerError)
-          puts "A server error occured during data transfer."
-          if GitReport.global_opts[:trace]
-            puts "Exception: #{e}\n"
-            puts "Message: #{JSON.parse(response.body)["message"]}\n"
-          else
-            puts "Run with --trace to get more info."
-          end
-          grlog(0 ,'send_data! - A server error occured during data transfer.')
-          grlog(0, "send_data! - Exception: #{e}")
-          grlog(0, "send_data! - Message: #{JSON.parse(response.body)["message"]}") if response
-          exit
-        else
-          puts "A client error occured during data transfer."
-          if GitReport.global_opts[:trace]
-            puts "Exception: #{e}\n"
-            e.backtrace.each do |line|
-              puts "#{line}\n"
-            end
-          else
-            puts "Run with --trace to get more info."
-          end
-          grlog(0, "send_data! - A client error occures during data transfer.")
-          grlog(0, "send_data! - Exception: #{e}")
-          grlog(0, "send_data! - Backtrace:")
-          e.backtrace.each do |line|
-            grlog(0, line)
-          end
-          exit
-        end
-
-        return false
+        communicate e, response
+        exit
       end
 
       true
@@ -93,22 +65,9 @@ module GitReport
       }.to_json
     end
 
-    # returns configuration object
-    def self.configuration
-      @@configuration ||= GitReport.configuration
-    end
-
     # returns the request path
     def self.request_path options
       @@path ||= "/v#{configuration.api_version}/projects"
-    end
-
-    # returns the default headers
-    def self.headers request
-      request['User-Agent']              = 'gitreport-client-ruby'
-      request['Content-Type']            = 'application/json'
-      request['Accept']                  = 'application/json'
-      request['X-gitreport-Auth-Token']  = configuration.auth_token
     end
 
   end

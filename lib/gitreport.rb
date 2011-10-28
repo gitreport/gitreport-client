@@ -1,4 +1,4 @@
-require 'logger'
+require 'g_logger'
 require 'git'
 require 'json'
 require 'net/http'
@@ -11,6 +11,7 @@ require 'commit'
 require 'history'
 require 'configuration'
 require 'git_configuration'
+require 'generic_sender'
 require 'sender'
 require 'batch_sender'
 require 'storage'
@@ -18,6 +19,8 @@ require 'hook'
 require 'supplier'
 
 module GitReport
+
+  @@global_opts ||= nil
 
   class ServerError < StandardError;end
 
