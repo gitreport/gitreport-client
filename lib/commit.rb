@@ -45,7 +45,7 @@ module GitReport
 
     # returns commits stats in more detail
     def stats
-      @commit.diff(@commit.parent).stats[:total]
+      @commit.parent.diff(@commit).stats[:total]
     rescue
       nil
     end

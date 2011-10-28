@@ -5,7 +5,7 @@ require "rubygems"
 require 'trollop'
 require "gitreport"
 
-SUB_COMMANDS = %w(activate deactivate commit sync history)
+SUB_COMMANDS = %w(activate deactivate commit sync import)
 
 def parse_options
 
@@ -15,7 +15,7 @@ gitreport is a commandline tool to synchronize your git repo's with gitreport.co
 
 Usage: gitreport <subcommand> [options]
 
-<subcommand> must be one of activate, deactivate, commit, sync, history
+<subcommand> must be one of activate, deactivate, commit, sync, import
 
 Examples:
 
@@ -23,7 +23,7 @@ gitreport activate   - register your project with gitreport.com
 gitreport deactivate - unregister your project from gitreport.com
 gitreport commit     - manually transfer your last and stored (offline) commits to gitreport.com
 gitreport sync       - manually transfer stored (offline) commits to gitreport.com
-gitreport history    - import all the commits of a project to gitreport.com
+gitreport import     - import all the commits of a project to gitreport.com
 
 gitreport allows the folling [options]:
     EOS
@@ -48,7 +48,7 @@ gitreport allows the folling [options]:
       GitReport::Sender.send! :last_and_stored
     when "sync"
       GitReport::Sender.send! :stored
-    when "history"
+    when "import"
       GitReport::BatchSender.send! :history
     else
       Trollop::die "unknown subcommand #{cmd.inspect}"

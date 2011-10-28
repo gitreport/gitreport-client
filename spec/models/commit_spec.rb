@@ -45,10 +45,10 @@ describe 'GitReport::Commit' do
   describe '#stats' do
     it 'should return the commit stats' do
       stats = GitReport::Commit.new(@project.log.commits.first, @project.identifier).stats
-      stats[:deletions].should  == 1
+      stats[:deletions].should  == 0
       stats[:files].should      == 1
       stats[:lines].should      == 1
-      stats[:insertions].should == 0
+      stats[:insertions].should == 1
     end
   end
 
