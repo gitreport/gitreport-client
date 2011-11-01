@@ -55,9 +55,8 @@ module GitReport
     # aggregates the projects core data
     def aggregate
       data = {}
-      data[:project_path]       = self.path
-      data[:project_name]       = self.name
-      data[:current_branch]     = self.branchname
+      data[:path]               = self.path
+      data[:name]               = self.name
       data[:remotes]            = self.remotes.map(&:name)
       data[:remote_urls]        = self.remotes.map(&:url)
       data[:remote_branches]    = self.remote_branches

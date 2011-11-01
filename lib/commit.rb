@@ -78,13 +78,14 @@ module GitReport
       data[:message]            = self.message
       data[:stats]              = self.stats
       if scope == :single
-        data[:project_path]       = @project.path
-        data[:project_name]       = @project.name
-        data[:current_branch]     = @project.branchname
-        data[:remotes]            = @project.remotes.map(&:name)
-        data[:remote_urls]        = @project.remotes.map(&:url)
-        data[:remote_branches]    = @project.remote_branches
-        data[:project_identifier] = self.project_identifier
+        data[:project] = {}
+        data[:current_branch]            = @project.branchname
+        data[:project][:path]            = @project.path
+        data[:project][:name]            = @project.name
+        data[:project][:remotes]         = @project.remotes.map(&:name)
+        data[:project][:remote_urls]     = @project.remotes.map(&:url)
+        data[:project][:remote_branches] = @project.remote_branches
+        data[:project][:identifier]      = self.project_identifier
       end
       data
     end
