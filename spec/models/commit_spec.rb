@@ -1,4 +1,4 @@
-# require 'spec_helper'
+require 'spec_helper'
 require 'gitreport'
 
 describe 'GitReport::Commit' do
@@ -61,9 +61,12 @@ describe 'GitReport::Commit' do
   describe '#data' do
     it 'should return the data to be transferred during a single commit including project data' do
       data = @commit.data
-      data.size.should == 14
-      [:project_path, :project_name, :current_branch, :remotes, :remote_urls, :remote_branches].each do |attr|
+      data.size.should == 9
+      [:sha, :short_sha, :author_name, :author_email, :time, :message, :stats, :project, :current_branch].each do |attr|
         data.keys.include?(attr).should be_true
+      end
+      [:path, :name, :remotes, :remote_urls, :remote_branches, :identifier].each do |attr|
+        data[:project].keys.include?(attr).should be_true
       end
     end
   end
@@ -84,7 +87,11 @@ describe 'GitReport::Commit' do
       data = JSON.parse(json_string)
 
       data.each_pair do |key, value|
+        next if key == "project"
         @commit.data[key.to_sym].should == value
+      end
+      data["project"].each_pair do |key, value|
+        @commit.data[:project][key.to_sym].should == value
       end
     end
   end

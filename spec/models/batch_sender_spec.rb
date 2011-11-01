@@ -25,8 +25,8 @@ describe 'GitReport::BatchSender' do
       data["commits"].collect{ |c| c["sha"] }.each do |sha|
         GitReport.project.revlist.include?(sha).should be_true
       end
-      data["project"].size.should == 7
-      data["project"]["project_name"].should == GitReport.project.name
+      data["project"].size.should == 6
+      data["project"]["name"].should == GitReport.project.name
     end
 
     it 'should not raise an error in case of the word commit at the start of a commit message' do
