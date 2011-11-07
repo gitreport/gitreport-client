@@ -36,7 +36,7 @@ module GitReport
 
     # sends the commit batch data to the server
     def self.send_data! batch, options = nil
-      grlog(1, 'send_data started')
+      grlog(1, 'send_data! started')
       begin
         response = Net::HTTP.Proxy(configuration.proxy_host, configuration.proxy_port).start(configuration.host, configuration.port) do |http|
           request = Net::HTTP::Post.new(request_path options)
@@ -46,8 +46,8 @@ module GitReport
           http.read_timeout = configuration.timeout
           http.request request unless GitReport.global_opts[:dry_run]
         end
-        grlog(1, response ? "send_data responded with #{response.code}" : "send_data had no response")
-        raise GitReport::ServerError unless (response.code == "200" or response.code == "401") unless GitReport.global_opts[:dry_run]
+        grlog(1, response ? "send_data! Server responded with #{response.code}" : "send_data! Server had no response")
+        raise GitReport::ServerError unless (response.code == "200") unless GitReport.global_opts[:dry_run]
       rescue Exception => e
         communicate e, response
         exit
