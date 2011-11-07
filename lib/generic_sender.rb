@@ -6,7 +6,9 @@ class GenericSender
     both, cmd, log = [], [], []
     if exception.is_a?(GitReport::ServerError)
       @error_type = "server error"
-      @details = JSON.parse(response.body)["message"] rescue response.body
+      message = JSON.parse(response.body)["message"] rescue response.body
+      error = JSON.parse(response.body)["error"] rescue nil
+      @details = message ? "#{message} - #{error}" : error
     else
       @error_type = "client error"
       @details = exception.backtrace
