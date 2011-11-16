@@ -7,9 +7,14 @@ require "gitreport"
 
 SUB_COMMANDS = %w(activate deactivate commit sync import)
 
+def version_info
+  File.read(File.dirname(__FILE__)+"/../VERSION").strip
+end
+
 def parse_options
 
   global_opts = Trollop::options do
+    version "gitreport #{version_info} (c) 2011 gitreport.com team"
     banner <<-EOS
 gitreport is a commandline tool to synchronize your git repo's with gitreport.com
 
