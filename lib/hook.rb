@@ -63,7 +63,7 @@ module GitReport
 
     # returns true if the hook file already has a hook line in
     def self.line_exists?
-      if file_content.match(/nohup\sbundle\sexec\sgitreport\scommit\s>\s\/dev\/null\s2>\s\/dev\/null\s<\s\/dev\/null\s&/)
+      if file_content.match(/\nnohup\s\.git\/hooks\/gitreport-post-commit\s>\s\/dev\/null\s2>\s\/dev\/null\s<\s\/dev\/null\s&\n/)
         return true
       end
 
@@ -98,7 +98,7 @@ module GitReport
 
     # returns the line to activate gitreport via post commit hook
     def self.line
-      "\nnohup bundle exec gitreport commit > /dev/null 2> /dev/null < /dev/null &\n"
+      "\nnohup .git/hooks/gitreport-post-commit > /dev/null 2> /dev/null < /dev/null &\n"
     end
 
     # returns the custom hook for gitreport
@@ -128,7 +128,7 @@ module GitReport
 
     # returns true if the hook file is ours and was not changed
     def self.hook_file_unchanged?
-      Digest::SHA1.hexdigest(file_content) == "e4032a91bb8e07e09ea637c803d8763e26e165e7"
+      Digest::SHA1.hexdigest(file_content) == "004c9e7c9124ead7ed347fac7996bd92b6e4e3b9"
     end
 
     # removes our hook line from hook file
@@ -138,7 +138,7 @@ module GitReport
 
     # removes our hook line from given content
     def self.clean_up content
-      content.gsub(/\nnohup\sbundle\sexec\sgitreport\scommit\s>\s\/dev\/null\s2>\s\/dev\/null\s<\s\/dev\/null\s&\n/,'')
+      content.gsub(/\nnohup\s\.git\/hooks\/gitreport-post-commit\s>\s\/dev\/null\s2>\s\/dev\/null\s<\s\/dev\/null\s&\n/,'')
     end
 
   end
