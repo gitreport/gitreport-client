@@ -5,12 +5,12 @@
 
 Gem::Specification.new do |s|
   s.name = "gitreport"
-  s.version = "0.0.10"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jan Roesner"]
-  s.date = "2011-11-07"
-  s.description = "gitreport keeps track of your projects. It collects info about commited and pushed data, submits it to our servers and provides a gorgous frontend to examine, discover and extract the data that you need to generate the payment recipes for your customers. No longer searching or `what did I commit when and where`..."
+  s.date = "2011-11-17"
+  s.description = "gitreport keeps track of your projects. It collects info about commited and pushed data, submits it to gitreport.com and provides a gorgous frontend to examine, discover and extract the data that you need to generate the payment recipes for your customers, measure your performance, find gaps and get an overview about your work. No longer searching or `what did I commit when and where`..."
   s.email = "jan@roesner.it"
   s.executables = ["gitreport"]
   s.extra_rdoc_files = [
@@ -74,13 +74,14 @@ Gem::Specification.new do |s|
     "spec/models/storage_spec.rb",
     "spec/models/supplier_spec.rb",
     "spec/spec_helper.rb",
-    "spec/support/fake_repository.rb"
+    "spec/support/fake_repository.rb",
+    "templates/gitreport-post-commit.bash"
   ]
-  s.homepage = "http://github.com/janroesner/gitreport"
+  s.homepage = "https://github.com/gitreport/gitreport-client"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.10"
-  s.summary = "gitreport tracks commit and push info of your git projects"
+  s.summary = "gitreport tracks your commits and pushes metadata to gitreport.com"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
