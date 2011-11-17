@@ -18,7 +18,7 @@ describe 'GitReport::Hook' do
       (File.exists?(hook_file)).should be_true
       content = File.open(hook_file, 'r').read
 
-      content.match(/\nnohup\sbundle\sexec\sgitreport\scommit\s>\s\/dev\/null\s2>\s\/dev\/null\s<\s\/dev\/null\s&\n/).should be_true
+      content.match(/\nnohup\s\.git\/hooks\/gitreport-post-commit\s>\s\/dev\/null\s2>\s\/dev\/null\s<\s\/dev\/null\s&\n/).should be_true
     end
 
     it 'should insert the gitreport hook into an existing post-commit hook file' do
@@ -30,7 +30,15 @@ describe 'GitReport::Hook' do
 
       GitReport::Hook.set!
       content = File.open(hook_file, 'r').read
-      content.match(/\nnohup\sbundle\sexec\sgitreport\scommit\s>\s\/dev\/null\s2>\s\/dev\/null\s<\s\/dev\/null\s&\n/).should be_true
+      content.match(/\nnohup\s\.git\/hooks\/gitreport-post-commit\s>\s\/dev\/null\s2>\s\/dev\/null\s<\s\/dev\/null\s&\n/).should be_true
+    end
+
+    it 'should create the custom hook file' do
+      custom_hook_file = "#{GitReport.project.path}/.git/hooks/gitreport-post-commit"
+
+      GitReport::Hook.set!
+
+      (File.exists?(custom_hook_file)).should be_true
     end
   end
 
@@ -57,7 +65,18 @@ describe 'GitReport::Hook' do
       (File.exists?(hook_file)).should be_true
       content = File.open(hook_file, 'r').read
       content.should match(/\ssome\spreexisting\shook\sfile\n/)
-      content.should_not match(/\nnohup\sbundle\sexec\sgitreport\scommit\s>\s\/dev\/null\s2>\s\/dev\/null\s<\s\/dev\/null\s&\n/)
+      content.should_not match(/\nnohup\s\.git\/hooks\/gitreport-post-commit\s>\s\/dev\/null\s2>\s\/dev\/null\s<\s\/dev\/null\s&\n/)
+    end
+
+    it 'should remove the custom hook file' do
+      custom_hook_file = "#{GitReport.project.path}/.git/hooks/post-commit"
+      File.open(custom_hook_file, 'w+') do |file|
+        file.write "# some existing custom hook file\n"
+      end
+
+      GitReport::Hook.remove!
+
+      (File.exists?(custom_hook_file)).should be_true
     end
   end
 end
