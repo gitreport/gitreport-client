@@ -15,10 +15,10 @@ require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "gitreport"
-  gem.homepage = "http://github.com/janroesner/gitreport"
+  gem.homepage = "https://github.com/gitreport/gitreport-client"
   gem.license = "MIT"
-  gem.summary = %Q{gitreport tracks commit and push info of your git projects}
-  gem.description = %Q{gitreport keeps track of your projects. It collects info about commited and pushed data, submits it to our servers and provides a gorgous frontend to examine, discover and extract the data that you need to generate the payment recipes for your customers. No longer searching or `what did I commit when and where`...}
+  gem.summary = %Q{gitreport tracks your commits and pushes metadata to gitreport.com}
+  gem.description = %Q{gitreport keeps track of your projects. It collects info about commited and pushed data, submits it to gitreport.com and provides a gorgous frontend to examine, discover and extract the data that you need to generate the payment recipes for your customers, measure your performance, find gaps and get an overview about your work. No longer searching or `what did I commit when and where`...}
   gem.email = "jan@roesner.it"
   gem.authors = ["Jan Roesner"]
   # dependencies defined in Gemfile
