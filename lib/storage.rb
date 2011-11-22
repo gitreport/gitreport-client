@@ -21,6 +21,8 @@ module GitReport
       if File.exists?("#{@path}/#{@filename}")
         data = File.read "#{@path}/#{@filename}"
         Marshal.load(Base64.decode64(data)) rescue NameError
+      else
+        []
       end
     end
   end
