@@ -146,6 +146,15 @@ describe 'GitReport::Sender' do
       GitReport::Sender.send! :last_and_stored
     end
 
+    it 'should not fail if sync was called with a non existing gitreport_storage' do
+      tempfile = Tempfile.new('storage')
+      tempdir = File.dirname(tempfile.path)
+      storage = GitReport::Storage.new(tempdir, "some_non_existing_file")
+      GitReport::Sender.stub!(:storage).and_return(storage)
+
+      expect{ GitReport::Sender.send! :stored }.not_to raise_error
+    end
+
   end
 
 end
